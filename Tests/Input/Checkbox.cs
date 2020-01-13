@@ -7,13 +7,13 @@ namespace SeleniumApplication.Tests.Input
 {
     public class Checkbox
     {
-        public string pageUrl = "https://www.seleniumeasy.com/test/basic-checkbox-demo.html";
+        asda string PageUrl = "https://www.seleniumeasy.com/test/basic-checkbox-demo.html";
         [Fact]
         public void CheckUrl()
         {
-            ChromeDriver driver = Helpers.RunPage(pageUrl);
+            ChromeDriver driver = Helpers.RunPage(PageUrl);
 
-            Assert.True(driver.Url == pageUrl, "Page not exist");
+            Assert.True(driver.Url == PageUrl, "Page not exist");
             driver.Close();
         }
         [Theory]
@@ -26,7 +26,7 @@ namespace SeleniumApplication.Tests.Input
         [InlineData(null, "//*[@id='easycont']/div/div[2]/div[2]/div[2]/div[4]/label/input")]
         public void IsElementExist(string id, string path)
         {
-            ChromeDriver driver = Helpers.RunPage(pageUrl);
+            ChromeDriver driver = Helpers.RunPage(PageUrl);
 
             IWebElement element = id != null ? driver.FindElementById(id) : driver.FindElementByXPath(path);
             driver.Close();
@@ -42,7 +42,7 @@ namespace SeleniumApplication.Tests.Input
         [InlineData(null, "//*[@id='easycont']/div/div[2]/div[2]/div[2]/div[4]/label/input")]
         public void IsElementEnable(string id, string path)
         {
-            ChromeDriver driver = Helpers.RunPage(pageUrl);
+            ChromeDriver driver = Helpers.RunPage(PageUrl);
 
             IWebElement element = id != null ? driver.FindElementById(id) : driver.FindElementByXPath(path);
             bool isEnable = element.Enabled;
@@ -53,32 +53,32 @@ namespace SeleniumApplication.Tests.Input
         [Fact]
         public void IsMessageHidden()
         {
-            ChromeDriver driver = Helpers.RunPage(pageUrl);
+            ChromeDriver driver = Helpers.RunPage(PageUrl);
 
             IWebElement message = driver.FindElementById("txtAge");
             driver.Close();
-            Assert.False(message.Displayed, $"Message is not hidden"); 
+            Assert.False(message.Displayed, "Message is not hidden"); 
         }
 
         [Fact]
         public void IsMessageVisible()
         {
-            ChromeDriver driver = Helpers.RunPage(pageUrl);
+            ChromeDriver driver = Helpers.RunPage(PageUrl);
             driver.FindElementById("isAgeSelected").Click();
             IWebElement message = driver.FindElementById("txtAge");
             driver.Close();
-            Assert.False(message.Displayed, $"Message is not show");
+            Assert.False(message.Displayed, "Message is not show");
         }
 
         [Fact]
         public void CheckboxMessage()
         {
-            ChromeDriver driver = Helpers.RunPage(pageUrl);
+            ChromeDriver driver = Helpers.RunPage(PageUrl);
 
             driver.FindElementById("isAgeSelected").Click();
             IWebElement message = driver.FindElementById("txtAge");
             driver.Close();
-            Assert.True(message.Text == "Success - Check box is checked", $"Message is not correct");
+            Assert.True(message.Text == "Success - Check box is checked", "Message is not correct");
         }
 
 
