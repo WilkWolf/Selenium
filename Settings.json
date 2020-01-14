@@ -1,0 +1,13 @@
+﻿{
+  "Url": {
+    "Base": "https://www.seleniumeasy.com/test/",
+    "Page": {
+      "Input": {
+        "BasicForm": "basic-first-form-demo.html",
+        "CheckBox": "basic-checkbox-demo.html",
+        "RadioButton": "basic-radiobutton-demo.html"
+      }
+    }
+
+  }
+}
