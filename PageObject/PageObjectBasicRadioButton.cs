@@ -7,20 +7,20 @@ namespace SeleniumApplication.PageObject
     public static class PageObjectBasicRadioButton
     {
 
-        public static string PageUrl = "https://www.seleniumeasy.com/test/basic-radiobutton-demo.html";
+        public static string PageUrl = Helpers.GetValueFromSettings("..Page.Input.RadioButton");
 
-        public static string  XPathRadioButtonMale= "//*[@id='easycont']/div/div[2]/div[1]/div[2]/label[1]/input";
-        public static string  XPathRadioButtonFemale = "//*[@id='easycont']/div/div[2]/div[1]/div[2]/label[2]/input";
-        public static string  IdButtonGetCheckedValue = "buttoncheck";
-        public static string  XPathDisplayFirstMessage = "//*[@id='easycont']/div/div[2]/div[1]/div[2]/p[3]";
+        public const string  XPathRadioButtonMale= "//*[@id='easycont']/div/div[2]/div[1]/div[2]/label[1]/input";
+        public const string  XPathRadioButtonFemale = "//*[@id='easycont']/div/div[2]/div[1]/div[2]/label[2]/input";
+        public const string  XPathButtonGetCheckedValue = "//*[@id='buttoncheck']";
+        public const string  XPathDisplayFirstMessage = "//*[@id='easycont']/div/div[2]/div[1]/div[2]/p[3]";
 
-        public static string  XPathGroupRadioButtonMale = "//*[@id='easycont']/div/div[2]/div[2]/div[2]/div[1]/label[1]/input";
-        public static string XPathGroupRadioButtonFemale = "//*[@id='easycont']/div/div[2]/div[2]/div[2]/div[1]/label[2]";
-        public static string XPathGroupRadioButtonAge0To5 = "//*[@id='easycont']/div/div[2]/div[2]/div[2]/div[2]/label[1]/input";
-        public static string XPathGroupRadioButtonMale5To15 = "//*[@id='easycont']/div/div[2]/div[2]/div[2]/div[2]/label[2]/input";
-        public static string XPathGroupRadioButtonMale15To50 = "//*[@id='easycont']/div/div[2]/div[2]/div[2]/div[2]/label[3]/input";
-        public static string XPathGroupButtonGetValues = "//*[@id='easycont']/div/div[2]/div[2]/div[2]/button";
-        public static string XPathGroupDisplay = "//*[@id='easycont']/div/div[2]/div[2]/div[2]/p[2]";
+        public const string XPathGroupRadioButtonMale = "//*[@id='easycont']/div/div[2]/div[2]/div[2]/div[1]/label[1]/input";
+        public const string XPathGroupRadioButtonFemale = "//*[@id='easycont']/div/div[2]/div[2]/div[2]/div[1]/label[2]";
+        public const string XPathGroupRadioButtonAge0To5 = "//*[@id='easycont']/div/div[2]/div[2]/div[2]/div[2]/label[1]/input";
+        public const string XPathGroupRadioButtonMale5To15 = "//*[@id='easycont']/div/div[2]/div[2]/div[2]/div[2]/label[2]/input";
+        public const string XPathGroupRadioButtonMale15To50 = "//*[@id='easycont']/div/div[2]/div[2]/div[2]/div[2]/label[3]/input";
+        public const string XPathGroupButtonGetValues = "//*[@id='easycont']/div/div[2]/div[2]/div[2]/button";
+        public const string XPathGroupDisplay = "//*[@id='easycont']/div/div[2]/div[2]/div[2]/p[2]";
        
         public static IWebElement GetRadioButtonMale(ChromeDriver driver)
         {
@@ -34,7 +34,7 @@ namespace SeleniumApplication.PageObject
 
         public static IWebElement GetButtonGetCheckedValue(ChromeDriver driver)
         {
-            return Helpers.GetWebElement(driver, null, IdButtonGetCheckedValue);
+            return Helpers.GetWebElement(driver, null, XPathButtonGetCheckedValue);
         }
         public static IWebElement GetDisplayFirstMessage(ChromeDriver driver)
         {
