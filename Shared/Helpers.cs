@@ -32,9 +32,9 @@ namespace SeleniumApplication.Shared
             return value;
         }
 
-        public static IWebElement GetWebElement(ChromeDriver driver, string id, string xPath)
+        public static IWebElement GetWebElement(ChromeDriver driver, string xPath)
         {
-            IWebElement element =   id == null ? driver.FindElementByXPath(xPath) : driver.FindElementById(id);
+            IWebElement element = driver.FindElementByXPath(xPath);
           return element;
         }
 
@@ -47,6 +47,10 @@ namespace SeleniumApplication.Shared
         public static void WriteText(IWebElement textBox, string text)
         {
             textBox.SendKeys(text);
+        }
+        public static string GetValueFromDictionary(Dictionary<string, string> dict, Enum key)
+        {
+            return dict[key.ToString()];
         }
 
     }

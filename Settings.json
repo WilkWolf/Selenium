@@ -5,7 +5,8 @@
       "Input": {
         "BasicForm": "basic-first-form-demo.html",
         "CheckBox": "basic-checkbox-demo.html",
-        "RadioButton": "basic-radiobutton-demo.html"
+        "RadioButton": "basic-radiobutton-demo.html",
+        "DropdownList": "basic-select-dropdown-demo.html"
       }
     }
 

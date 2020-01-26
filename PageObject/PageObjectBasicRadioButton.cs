@@ -17,56 +17,56 @@ namespace SeleniumApplication.PageObject
         public const string XPathGroupRadioButtonMale = "//*[@id='easycont']/div/div[2]/div[2]/div[2]/div[1]/label[1]/input";
         public const string XPathGroupRadioButtonFemale = "//*[@id='easycont']/div/div[2]/div[2]/div[2]/div[1]/label[2]";
         public const string XPathGroupRadioButtonAge0To5 = "//*[@id='easycont']/div/div[2]/div[2]/div[2]/div[2]/label[1]/input";
-        public const string XPathGroupRadioButtonMale5To15 = "//*[@id='easycont']/div/div[2]/div[2]/div[2]/div[2]/label[2]/input";
-        public const string XPathGroupRadioButtonMale15To50 = "//*[@id='easycont']/div/div[2]/div[2]/div[2]/div[2]/label[3]/input";
+        public const string XPathGroupRadioButtonAge5To15 = "//*[@id='easycont']/div/div[2]/div[2]/div[2]/div[2]/label[2]/input";
+        public const string XPathGroupRadioButtonAge15To50 = "//*[@id='easycont']/div/div[2]/div[2]/div[2]/div[2]/label[3]/input";
         public const string XPathGroupButtonGetValues = "//*[@id='easycont']/div/div[2]/div[2]/div[2]/button";
         public const string XPathGroupDisplay = "//*[@id='easycont']/div/div[2]/div[2]/div[2]/p[2]";
        
         public static IWebElement GetRadioButtonMale(ChromeDriver driver)
         {
-            return Helpers.GetWebElement(driver, null, XPathRadioButtonMale);
+            return Helpers.GetWebElement(driver, XPathRadioButtonMale);
         }
 
         public static IWebElement GetRadioButtonFemale(ChromeDriver driver)
         {
-            return Helpers.GetWebElement(driver, null, XPathRadioButtonFemale);
+            return Helpers.GetWebElement(driver, XPathRadioButtonFemale);
         }
 
         public static IWebElement GetButtonGetCheckedValue(ChromeDriver driver)
         {
-            return Helpers.GetWebElement(driver, null, XPathButtonGetCheckedValue);
+            return Helpers.GetWebElement(driver, XPathButtonGetCheckedValue);
         }
         public static IWebElement GetDisplayFirstMessage(ChromeDriver driver)
         {
-            return Helpers.GetWebElement(driver, null, XPathDisplayFirstMessage);
+            return Helpers.GetWebElement(driver, XPathDisplayFirstMessage);
         }
         public static IWebElement GetGroupRadioButtonMale(ChromeDriver driver)
         {
-            return Helpers.GetWebElement(driver, null, XPathGroupRadioButtonMale);
+            return Helpers.GetWebElement(driver, XPathGroupRadioButtonMale);
         }
         public static IWebElement GetGroupRadioButtonFemale(ChromeDriver driver)
         {
-            return Helpers.GetWebElement(driver, null, XPathGroupRadioButtonFemale);
+            return Helpers.GetWebElement(driver, XPathGroupRadioButtonFemale);
         }
         public static IWebElement GetGroupRadioButtonAge0To5(ChromeDriver driver)
         {
-            return Helpers.GetWebElement(driver, null, XPathGroupRadioButtonAge0To5);
+            return Helpers.GetWebElement(driver, XPathGroupRadioButtonAge0To5);
         }
         public static IWebElement GetGroupRadioButtonAge5To15(ChromeDriver driver)
         {
-            return Helpers.GetWebElement(driver, null, XPathGroupRadioButtonMale5To15);
+            return Helpers.GetWebElement(driver, XPathGroupRadioButtonAge5To15);
         }
         public static IWebElement GetGroupRadioButtonAge15To50(ChromeDriver driver)
         {
-            return Helpers.GetWebElement(driver, null, XPathGroupRadioButtonMale15To50);
+            return Helpers.GetWebElement(driver, XPathGroupRadioButtonAge15To50);
         }
         public static IWebElement GetGroupButtonGetValues(ChromeDriver driver)
         {
-            return Helpers.GetWebElement(driver, null, XPathGroupButtonGetValues);
+            return Helpers.GetWebElement(driver, XPathGroupButtonGetValues);
         }
         public static IWebElement GetGroupDisplay(ChromeDriver driver)
         {
-            return Helpers.GetWebElement(driver, null, XPathGroupDisplay);
+            return Helpers.GetWebElement(driver, XPathGroupDisplay);
         }
 
 

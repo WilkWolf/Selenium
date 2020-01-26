@@ -5,7 +5,7 @@ using SeleniumApplication.Shared;
 namespace SeleniumApplication.PageObject
 {
 
-    public static class BasicForm
+    public static class PageObjectBasicForm
     {
         public static readonly string PageUrl = Helpers.GetValueFromSettings("..Page.Input.BasicForm");
 
@@ -13,12 +13,13 @@ namespace SeleniumApplication.PageObject
 
         public const string XPathButtonSubmitMessage = "//*[@id='get-input']/button";
         public const string XPathButtonSubmitSum = "//*[@id='gettotal']/button";
-        public const string IdTextBoxMessage = "user-message";
-        public const string IdTextBoxSum1 = "sum1";
-        public const string IdTextBoxSum2 = "sum2";
-        public const string IdDisplayMessage = "display";
-        public const string IdDisplaySum = "displayvalue";
+        public const string XPathTextBoxMessage = "//*[@id='user-message']";
+        public const string XPathTextBoxSum1 = "//*[@id='sum1']";
+        public const string XPathTextBoxSum2 = "//*[@id='sum2']";
+        public const string XPathDisplayMessage = "//*[@id='display']";
+        public const string XPathDisplaySum = "//*[@id='displayvalue']";
 
+         
         //maybe it can be deleted 
         private static IWebElement ButtonSubmitMessage;
         private static IWebElement ButtonSubmitSum;
@@ -31,42 +32,42 @@ namespace SeleniumApplication.PageObject
 
         public static IWebElement GetButtonSubmitMessage(ChromeDriver driver)
         {
-            ButtonSubmitMessage = Helpers.GetWebElement(driver, null, XPathButtonSubmitMessage);
+            ButtonSubmitMessage = Helpers.GetWebElement(driver, XPathButtonSubmitMessage);
             return ButtonSubmitMessage;
         }
 
         public static IWebElement GetButtonSubmitSum(ChromeDriver driver)
         {
-            ButtonSubmitSum = Helpers.GetWebElement(driver, null, XPathButtonSubmitSum);
+            ButtonSubmitSum = Helpers.GetWebElement(driver, XPathButtonSubmitSum);
             return ButtonSubmitSum;
         }
 
         public static IWebElement GetTextBoxMessage(ChromeDriver driver)
         {
-            TextBoxMessage = Helpers.GetWebElement(driver, IdTextBoxMessage, null);
+            TextBoxMessage = Helpers.GetWebElement(driver, XPathTextBoxMessage);
             return TextBoxMessage;
         }
 
         public static IWebElement GetTextBoxSum1(ChromeDriver driver)
         {
-            TextBoxSum1 = Helpers.GetWebElement(driver, IdTextBoxSum1, null);
+            TextBoxSum1 = Helpers.GetWebElement(driver, XPathTextBoxSum1);
             return TextBoxSum1;
         }
 
         public static IWebElement GetTextBoxSum2(ChromeDriver driver)
         {
-            TextBoxSum2 = Helpers.GetWebElement(driver, IdTextBoxSum2, null);
+            TextBoxSum2 = Helpers.GetWebElement(driver, XPathTextBoxSum2);
             return TextBoxSum2;
         }
 
         public static IWebElement GetDisplayMessage(ChromeDriver driver)
         {
-            DisplayMessage = Helpers.GetWebElement(driver, IdDisplayMessage, null);
+            DisplayMessage = Helpers.GetWebElement(driver, XPathDisplayMessage);
             return DisplayMessage;
         }
         public static IWebElement GetDisplaySum(ChromeDriver driver)
         {
-            DisplaySum = Helpers.GetWebElement(driver, IdDisplaySum, null);
+            DisplaySum = Helpers.GetWebElement(driver, XPathDisplaySum);
             return DisplaySum;
         }
     }
