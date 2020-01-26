@@ -12,54 +12,31 @@ namespace SeleniumApplication.Tests.Input
         [Fact]
         public void CheckUrl() { 
         
-            ChromeDriver driver = Helpers.RunPage(BasicForm.PageUrl);
+            ChromeDriver driver = Helpers.RunPage(PageObjectBasicForm.PageUrl);
 
             Assert.True(driver.Url == "https://www.seleniumeasy.com/test/basic-first-form-demo.html", "Page not exist");
             driver.Close();
         }
 
-        [Theory]
-        [InlineData(null,BasicForm.ButtonSubmitMessage)]
-        [InlineData(null,BasicForm.ButtonSubmitSum)]
-        [InlineData(BasicForm.TextBoxMessage,null)]
-        [InlineData(BasicForm.TextBoxSum1, null)]
-        [InlineData(BasicForm.TextBoxSum2, null)]
-        [InlineData(BasicForm.DisplayMessage, null)]
-        [InlineData(BasicForm.DisplaySum, null)]
-        public void IsElementExist(string id, string xPath)
-        {
-            ChromeDriver driver = Helpers.RunPage(BasicForm.PageUrl);
-            IWebElement element = Helpers.GetWebElement(driver, id, xPath); 
-            driver.Close();
-            Assert.True(element != null, $"Element with id/XPath == {id}{xPath} does not exist");
-         }
+
 
         [Theory]
-        [InlineData(BasicForm.TextBoxMessage)]
-        [InlineData(BasicForm.TextBoxSum1)]
-        [InlineData(BasicForm.TextBoxSum2)]
-        public void InputDataToTextForm (string inputId)
+        [InlineData(PageObjectBasicForm.XPathTextBoxSum1)]
+        [InlineData(PageObjectBasicForm.XPathTextBoxSum2)]
+        public void InputNonNumberTextToSumTextBoxForm(string inputId)
         {
-            ChromeDriver driver = Helpers.RunPage(BasicForm.PageUrl);
-            IWebElement element =  driver.FindElementById(inputId);
-            Helpers.WriteText(element,"Test");
+            ChromeDriver driver = Helpers.RunPage(PageObjectBasicForm.PageUrl);
+
+            IWebElement element = driver.FindElementByXPath(inputId);
+            Helpers.WriteText(element, "Test");
+            PageObjectBasicForm.GetButtonSubmitSum(driver).Click();
+
             string result = Helpers.GetValue(element);
             driver.Close();
-            Assert.True(result == "Test", $"Textbox {inputId} test failed. \n Expected: Test \n Current: {result}");
+
+            Assert.True(result == "", $"Textbox {inputId} test failed. Value should number. \n Expected: Test \n Current: {result}");
         }
 
-        [Theory]
-        [InlineData(BasicForm.ButtonSubmitSum)]
-        [InlineData(BasicForm.ButtonSubmitMessage)]
-        public void IsButtonActive(string form)
-        {
-            ChromeDriver driver = Helpers.RunPage(BasicForm.PageUrl);
-            bool isButtonEnable = driver.FindElementByXPath(form).Enabled;
-
-            driver.Close();
-
-            Assert.True(isButtonEnable);
-        }
 
         [Theory]
         [InlineData("Test")]
@@ -70,13 +47,12 @@ namespace SeleniumApplication.Tests.Input
 
         public void SendMessageToFormGetInput(string text)
         {
-            ChromeDriver driver = Helpers.RunPage(BasicForm.PageUrl);
-            IWebElement textBox = Helpers.GetWebElement(driver, BasicForm.TextBoxMessage, null);
-            IWebElement button = Helpers.GetWebElement(driver, null, BasicForm.ButtonSubmitMessage);
-            IWebElement display = Helpers.GetWebElement(driver, BasicForm.DisplayMessage, null);
-            Helpers.WriteText(textBox, text);
-            button.Click();
-            string result = display.Text;
+
+            ChromeDriver driver = Helpers.RunPage(PageObjectBasicForm.PageUrl);
+            PageObjectSelectDropdownList.GetSelectListDropdown(driver);
+            Helpers.WriteText(PageObjectBasicForm.GetTextBoxMessage(driver), text);
+            PageObjectBasicForm.GetButtonSubmitMessage(driver).Click();
+            string result = PageObjectBasicForm.GetDisplayMessage(driver).Text;
             driver.Close();
             Assert.True(result == text, $"Test failed. \n Expected: {text} \n Current: {result} ");
         }
@@ -110,15 +86,13 @@ namespace SeleniumApplication.Tests.Input
         [InlineData("1.1", "1.1", "NaN")]
         public void SendMessageToFormGetTotal(string valueA, string valueB, string sum)
         {
-            ChromeDriver driver = Helpers.RunPage(BasicForm.PageUrl);
-            IWebElement textBoxSum1 = Helpers.GetWebElement(driver, BasicForm.TextBoxSum1, null);
-            IWebElement textBoxSum2 = Helpers.GetWebElement(driver, BasicForm.TextBoxSum2, null);
-            IWebElement display = Helpers.GetWebElement(driver, BasicForm.DisplaySum, null);
-            IWebElement button = Helpers.GetWebElement(driver, null, BasicForm.ButtonSubmitSum);
-            textBoxSum1.SendKeys(valueA);
-            textBoxSum2.SendKeys(valueB);
-            button.Click();
-            string result = display.Text;
+            ChromeDriver driver = Helpers.RunPage(PageObjectBasicForm.PageUrl);
+
+            PageObjectBasicForm.GetTextBoxSum1(driver).SendKeys(valueA);
+            PageObjectBasicForm.GetTextBoxSum2(driver).SendKeys(valueB);
+            PageObjectBasicForm.GetButtonSubmitSum(driver).Click();
+            string result = PageObjectBasicForm.GetDisplaySum(driver).Text;
+
             driver.Close();
             Assert.True(result == sum, $"Test failed. \n Expected: {sum} \n Current: {result} ");
         }
