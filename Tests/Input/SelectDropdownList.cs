@@ -8,7 +8,7 @@ using Xunit;
 
 namespace SeleniumApplication.Tests.Input
 {
-    class SelectDropdownList
+    public class SelectDropdownList
     {
         [Fact]
         public void CheckUrl()

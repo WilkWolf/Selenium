@@ -1,7 +1,9 @@
-﻿using OpenQA.Selenium.Chrome;
+﻿using System.Collections.Generic;
+using OpenQA.Selenium.Chrome;
 using System.IO;
 using Newtonsoft.Json.Linq;
 using OpenQA.Selenium;
+using System;
 
 namespace SeleniumApplication.Shared
 {
