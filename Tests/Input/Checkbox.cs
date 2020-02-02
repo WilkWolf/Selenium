@@ -1,6 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using SeleniumApplication.PageObject;
+using SeleniumApplication.PageObject.Input;
 using SeleniumApplication.Shared;
 using Xunit;
 
