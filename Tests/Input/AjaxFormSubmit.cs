@@ -10,8 +10,7 @@ namespace SeleniumApplication.Tests.Input
 {
     public class AjaxFormSubmit
     {
-        private PageObjectAjaxFormSubmit PageObjects = new PageObjectAjaxFormSubmit();
-
+        private readonly PageObjectAjaxFormSubmit PageObjects = new PageObjectAjaxFormSubmit();
 
         [Fact]
         public void CheckUrl()
@@ -51,11 +50,6 @@ namespace SeleniumApplication.Tests.Input
             Assert.True(isSubmitButtonHidden, "Button is displayed");
         }
 
-        public void IsAjaxAnimationDisplayed()
-        {
-
-        }
-
         [Fact]
         public void AjaxMessage()
         {
@@ -84,7 +78,18 @@ namespace SeleniumApplication.Tests.Input
             Assert.True(expectedMessage == message, $"Message is not valid.\nExpected:{expectedMessage}\nCurrent:{message}");
         }
 
-        
+        [Fact]
+        public void DisplayedAjaxIcon()
+        {
+            ChromeDriver driver = Helpers.RunPage(PageObjects.PageUrl);
+
+            Helpers.WriteText(PageObjects.GetNameInput(driver), "Test Name");
+            PageObjects.GetSubmitButton(driver).Click();
+            Thread.Sleep(400);
+            bool isIconDisplayed = PageObjects.GetAjaxIcon(driver).Displayed;
+
+            Assert.True(isIconDisplayed,$"Ajax icon is not displayed.");
+        }
 
         private string WaitForCorrectResponse(ChromeDriver driver, string expectedMessage)
         {

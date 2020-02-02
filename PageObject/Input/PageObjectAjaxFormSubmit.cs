@@ -18,7 +18,7 @@ namespace SeleniumApplication.PageObject
         public readonly string XPathCommentInput = "//*[@id='description']";
         public readonly string XPathSubmitButton = "//*[@id='btn-submit']";
         public readonly string XPathDisplayMessage = "//*[@id='submit-control']";
-      //  public readonly string XPathAjaxDisplay = "//*[@id='/']";
+        public readonly string XPathAjaxIcon = "//*[@id='submit-control']/img";
         public readonly string XPathNameValidation = "//*[@id='frm']/div[1]/span";
 
         public IWebElement GetNameLabel(ChromeDriver driver) => Helpers.GetWebElement(driver, XPathNameLabel);
@@ -33,7 +33,7 @@ namespace SeleniumApplication.PageObject
 
         public IWebElement GetDisplayMessage(ChromeDriver driver) => Helpers.GetWebElement(driver, XPathDisplayMessage);
 
-     //   public IWebElement GetAjaxDisplay(ChromeDriver driver) => Helpers.GetWebElement(driver, XPathAjaxDisplay);
+        public IWebElement GetAjaxIcon(ChromeDriver driver) => Helpers.GetWebElement(driver, XPathAjaxIcon);
 
         public IWebElement GetNameValidation(ChromeDriver driver) => Helpers.GetWebElement(driver, XPathNameValidation);
     }
