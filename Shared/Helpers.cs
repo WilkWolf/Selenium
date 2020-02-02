@@ -20,6 +20,14 @@ namespace SeleniumApplication.Shared
             return driver;
         }
 
+        public static ChromeDriver RunPageWithOpenedBrowser(string pageUrl)
+        {
+            string url = GetPage(pageUrl);
+            var driver = new ChromeDriver();
+            driver.Navigate().GoToUrl(url);
+            return driver;
+        }
+
         private static string GetPage(string page)
         {
            return  GetValueFromSettings("..Base") + page;
