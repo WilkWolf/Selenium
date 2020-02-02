@@ -1,6 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using SeleniumApplication.PageObject;
+using SeleniumApplication.PageObject.Input;
 using SeleniumApplication.Shared;
 using Xunit;
 
@@ -18,12 +18,10 @@ namespace SeleniumApplication.Tests.Input
             driver.Close();
         }
 
-
-
         [Theory]
         [InlineData(PageObjectBasicForm.XPathTextBoxSum1)]
         [InlineData(PageObjectBasicForm.XPathTextBoxSum2)]
-        public void InputNonNumberTextToSumTextBoxForm(string inputId)
+        public void InputNonNumberTextToSumTextBoxForm(string inputId) 
         {
             ChromeDriver driver = Helpers.RunPage(PageObjectBasicForm.PageUrl);
 
@@ -34,7 +32,7 @@ namespace SeleniumApplication.Tests.Input
             string result = Helpers.GetValue(element);
             driver.Close();
 
-            Assert.True(result == "", $"Textbox {inputId} test failed. Value should number. \n Expected: Test \n Current: {result}");
+            Assert.True(result == "", $"Textbox {inputId} test failed. Value should be a number. \n Expected: Test\n Current: {result}");
         }
 
 
@@ -44,16 +42,14 @@ namespace SeleniumApplication.Tests.Input
         [InlineData("Test123")]
         [InlineData("     ")]
         [InlineData("")]
-
         public void SendMessageToFormGetInput(string text)
         {
-
             ChromeDriver driver = Helpers.RunPage(PageObjectBasicForm.PageUrl);
-            PageObjectSelectDropdownList.GetSelectListDropdown(driver);
+
             Helpers.WriteText(PageObjectBasicForm.GetTextBoxMessage(driver), text);
             PageObjectBasicForm.GetButtonSubmitMessage(driver).Click();
+           
             string result = PageObjectBasicForm.GetDisplayMessage(driver).Text;
-            driver.Close();
             Assert.True(result == text, $"Test failed. \n Expected: {text} \n Current: {result} ");
         }
 
@@ -93,7 +89,7 @@ namespace SeleniumApplication.Tests.Input
             PageObjectBasicForm.GetButtonSubmitSum(driver).Click();
             string result = PageObjectBasicForm.GetDisplaySum(driver).Text;
 
-            driver.Close();
+
             Assert.True(result == sum, $"Test failed. \n Expected: {sum} \n Current: {result} ");
         }
     }

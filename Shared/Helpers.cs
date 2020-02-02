@@ -4,6 +4,7 @@ using System.IO;
 using Newtonsoft.Json.Linq;
 using OpenQA.Selenium;
 using System;
+using OpenQA.Selenium.Support.UI;
 
 namespace SeleniumApplication.Shared
 {
@@ -12,11 +13,10 @@ namespace SeleniumApplication.Shared
         public static ChromeDriver RunPage(string pageUrl)
         {
             string url = GetPage(pageUrl);
-           ChromeOptions options = new ChromeOptions();
-            options.AddArgument("headless");
-            var driver = new ChromeDriver(options);
-
-            driver.Navigate().GoToUrl(url);
+           ChromeOptions options = new ChromeOptions(); 
+           options.AddArgument("headless");
+           var driver = new ChromeDriver(options);
+           driver.Navigate().GoToUrl(url);
             return driver;
         }
 
