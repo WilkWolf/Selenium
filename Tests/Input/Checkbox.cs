@@ -8,25 +8,24 @@ namespace SeleniumApplication.Tests.Input
 {
     public class Checkbox
     {
-    
+        private readonly PageObjectBasicCheckbox _pageObjects = new PageObjectBasicCheckbox();
+
         [Fact]
         public void CheckUrl()
         {
-            ChromeDriver driver = Helpers.RunPage(PageObjectBasicCheckbox.PageUrl);
+            ChromeDriver driver = Helpers.RunPage(_pageObjects.PageUrl);
 
             Assert.True(driver.Url == "https://www.seleniumeasy.com/test/basic-checkbox-demo.html", "Page not exist");
             driver.Close();
         }
 
-
-
         [Fact]
         public void CheckboxMessage()
         {
-            ChromeDriver driver = Helpers.RunPage(PageObjectBasicForm.PageUrl);
+            ChromeDriver driver = Helpers.RunPage(_pageObjects.PageUrl);
 
-            PageObjectBasicCheckbox.GetCheckBoxAge(driver).Click();
-            string result = PageObjectBasicCheckbox.GetMessageSelectedAge(driver).Text;
+            _pageObjects.GetCheckBoxAge(driver).Click();
+            string result = _pageObjects.GetMessageSelectedAge(driver).Text;
 
             driver.Close();
             Assert.True(result == "Success - Check box is checked", "Message is not correct");
@@ -40,10 +39,11 @@ namespace SeleniumApplication.Tests.Input
         [InlineData(PageObjectBasicCheckbox.XPathCheckBox4)]
         public void CheckButtonTextWhenSingleCheckboxIsSelected(string xPath)
         {
-            ChromeDriver driver = Helpers.RunPage(PageObjectBasicCheckbox.PageUrl);
+            ChromeDriver driver = Helpers.RunPage(_pageObjects.PageUrl);
             IWebElement checkBox = driver.FindElementByXPath(xPath);
             checkBox.Click();
-            string result = Helpers.GetValue(PageObjectBasicCheckbox.GetButtonCheck(driver));
+            string result = Helpers.GetValue(_pageObjects.GetButtonCheck(driver));
+
             driver.Close();
             Assert.True(result == "Check All", $"Message is not correct \n Current: {result} \n Expected: Check All");
         }
@@ -51,14 +51,15 @@ namespace SeleniumApplication.Tests.Input
         [Fact]
         public void SelectRightFourCheckboxAndCheckMessage()
         {
-            ChromeDriver driver = Helpers.RunPage(PageObjectBasicCheckbox.PageUrl);
+            ChromeDriver driver = Helpers.RunPage(_pageObjects.PageUrl);
 
-            PageObjectBasicCheckbox.GetCheckBox1(driver).Click();
-            PageObjectBasicCheckbox.GetCheckBox2(driver).Click();
-            PageObjectBasicCheckbox.GetCheckBox3(driver).Click();
-            PageObjectBasicCheckbox.GetCheckBox4(driver).Click();
+            _pageObjects.GetCheckBox1(driver).Click();
+            _pageObjects.GetCheckBox2(driver).Click();
+            _pageObjects.GetCheckBox3(driver).Click();
+            _pageObjects.GetCheckBox4(driver).Click();
 
-            string result = PageObjectBasicCheckbox.GetButtonCheck(driver).Text;
+            string result = Helpers.GetValue(_pageObjects.GetButtonCheck(driver));
+
             driver.Close();
             Assert.True(result == "Uncheck All", $"Message is not correct \n Current: {result} \n Expected: Check All");
         }
@@ -66,30 +67,32 @@ namespace SeleniumApplication.Tests.Input
         [Fact]
         public void ClickUncheckAllButtonAndCheckText()
         {
-            ChromeDriver driver = Helpers.RunPage(PageObjectBasicCheckbox.PageUrl);
+            ChromeDriver driver = Helpers.RunPage(_pageObjects.PageUrl);
 
-            PageObjectBasicCheckbox.GetCheckBox1(driver).Click();
-            PageObjectBasicCheckbox.GetCheckBox2(driver).Click();
-            PageObjectBasicCheckbox.GetCheckBox3(driver).Click();
-            PageObjectBasicCheckbox.GetCheckBox4(driver).Click();
+            _pageObjects.GetCheckBox1(driver).Click();
+            _pageObjects.GetCheckBox2(driver).Click();
+            _pageObjects.GetCheckBox3(driver).Click();
+            _pageObjects.GetCheckBox4(driver).Click();
 
-            PageObjectBasicCheckbox.GetButtonCheck(driver).Click();
-            string result = PageObjectBasicCheckbox.GetButtonCheck(driver).Text;
+            _pageObjects.GetButtonCheck(driver).Click();
+
+            string result = Helpers.GetValue(_pageObjects.GetButtonCheck(driver));
+
             driver.Close();
-
             Assert.True(result == "Check All", $"Message is not correct \n Current: {result} \n Expected: Check All");
         }
 
         [Fact]
         public void CheckButtonMessageWhenSelectedThreeRightAndOneWrongCheckBox()
         {
-            ChromeDriver driver = Helpers.RunPage(PageObjectBasicCheckbox.PageUrl);
-            PageObjectBasicCheckbox.GetCheckBoxAge(driver).Click();
-            PageObjectBasicCheckbox.GetCheckBox2(driver).Click();
-            PageObjectBasicCheckbox.GetCheckBox3(driver).Click();
-            PageObjectBasicCheckbox.GetCheckBox4(driver).Click();
+            ChromeDriver driver = Helpers.RunPage(_pageObjects.PageUrl);
+            _pageObjects.GetCheckBoxAge(driver).Click();
+            _pageObjects.GetCheckBox2(driver).Click();
+            _pageObjects.GetCheckBox3(driver).Click();
+            _pageObjects.GetCheckBox4(driver).Click();
 
-            string result = PageObjectBasicCheckbox.GetButtonCheck(driver).Text;
+            string result = Helpers.GetValue(_pageObjects.GetButtonCheck(driver));
+
             driver.Close();
             Assert.True(result == "Check All", $"Message is not correct \n Current: {result} \n Expected: Check All");
         }

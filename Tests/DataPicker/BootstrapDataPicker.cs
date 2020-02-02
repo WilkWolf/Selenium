@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SeleniumApplication.Tests
+﻿
+namespace SeleniumApplication.Tests.DataPicker
 {
     class BootstrapDataPicker
     {

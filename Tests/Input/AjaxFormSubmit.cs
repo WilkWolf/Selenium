@@ -1,8 +1,6 @@
 ﻿using System.Threading;
-using Newtonsoft.Json.Bson;
-using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using SeleniumApplication.PageObject;
+using SeleniumApplication.PageObject.Input;
 using SeleniumApplication.Shared;
 using Xunit;
 
@@ -10,12 +8,12 @@ namespace SeleniumApplication.Tests.Input
 {
     public class AjaxFormSubmit
     {
-        private readonly PageObjectAjaxFormSubmit PageObjects = new PageObjectAjaxFormSubmit();
+        private readonly PageObjectAjaxFormSubmit _pageObjects = new PageObjectAjaxFormSubmit();
 
         [Fact]
         public void CheckUrl()
         {
-            ChromeDriver driver = Helpers.RunPage(PageObjects.PageUrl);
+            ChromeDriver driver = Helpers.RunPage(_pageObjects.PageUrl);
 
             Assert.True(driver.Url == "https://www.seleniumeasy.com/test/ajax-form-submit-demo.html", $"Page not exist \n Current:{driver.Url}\n Expected:https://www.seleniumeasy.com/test/basic-radiobutton-demo.html ");
             driver.Close();
@@ -24,11 +22,13 @@ namespace SeleniumApplication.Tests.Input
         [Fact]
         public void SubmitEmptyForm()
         {
-            ChromeDriver driver = Helpers.RunPage(PageObjects.PageUrl);
-            bool isSubmitButtonHidden = PageObjects.GetSubmitButton(driver).Displayed;
+            ChromeDriver driver = Helpers.RunPage(_pageObjects.PageUrl);
+            bool isSubmitButtonHidden = _pageObjects.GetSubmitButton(driver).Displayed;
 
-            PageObjects.GetSubmitButton(driver).Click();
-            bool isValidationDisplayed =  PageObjects.GetNameValidation(driver).Displayed;
+            _pageObjects.GetSubmitButton(driver).Click();
+            bool isValidationDisplayed = _pageObjects.GetNameValidation(driver).Displayed;
+
+            driver.Close();
             Assert.True(isValidationDisplayed, "Validations is not displayed");
             Assert.True(isSubmitButtonHidden, "Button is not displayed");
         }
@@ -36,16 +36,17 @@ namespace SeleniumApplication.Tests.Input
         [Fact]
         public void SubmitFilledForm()
         {
-            ChromeDriver driver = Helpers.RunPage(PageObjects.PageUrl);
+            ChromeDriver driver = Helpers.RunPage(_pageObjects.PageUrl);
 
-            Helpers.WriteText(PageObjects.GetNameInput(driver),"Test Name");
-            Helpers.WriteText(PageObjects.GetCommentInput(driver),"Test Comment");
-            bool isSubmitButtonHidden = PageObjects.GetSubmitButton(driver).Displayed;
+            Helpers.WriteText(_pageObjects.GetNameInput(driver), "Test Name");
+            Helpers.WriteText(_pageObjects.GetCommentInput(driver), "Test Comment");
+            bool isSubmitButtonHidden = _pageObjects.GetSubmitButton(driver).Displayed;
 
-            PageObjects.GetSubmitButton(driver).Click();
+            _pageObjects.GetSubmitButton(driver).Click();
 
-            bool isValidationDisplayed = PageObjects.GetNameValidation(driver).Displayed;
+            bool isValidationDisplayed = _pageObjects.GetNameValidation(driver).Displayed;
 
+            driver.Close();
             Assert.False(isValidationDisplayed, "Validations is  displayed");
             Assert.True(isSubmitButtonHidden, "Button is displayed");
         }
@@ -53,42 +54,45 @@ namespace SeleniumApplication.Tests.Input
         [Fact]
         public void AjaxMessage()
         {
-            ChromeDriver driver = Helpers.RunPage(PageObjects.PageUrl);
+            ChromeDriver driver = Helpers.RunPage(_pageObjects.PageUrl);
             string expectedMessage = "Ajax Request is Processing!";
 
-            Helpers.WriteText(PageObjects.GetNameInput(driver), "Test Name");
-            PageObjects.GetSubmitButton(driver).Click();
+            Helpers.WriteText(_pageObjects.GetNameInput(driver), "Test Name");
+            _pageObjects.GetSubmitButton(driver).Click();
 
-            string message = PageObjects.GetDisplayMessage(driver).Text;
+            string message = _pageObjects.GetDisplayMessage(driver).Text;
 
-            Assert.True(expectedMessage == message,$"Message is not valid.\nExpected:{expectedMessage}\nCurrent:{message}");
+            driver.Close();
+            Assert.True(expectedMessage == message, $"Message is not valid.\nExpected:{expectedMessage}\nCurrent:{message}");
         }
 
         [Fact]
         public void DisplayedMessage()
         {
-            ChromeDriver driver = Helpers.RunPage(PageObjects.PageUrl);
+            ChromeDriver driver = Helpers.RunPage(_pageObjects.PageUrl);
             string expectedMessage = "Form submited Successfully!";
 
-            Helpers.WriteText(PageObjects.GetNameInput(driver), "Test Name");
-            PageObjects.GetSubmitButton(driver).Click();
+            Helpers.WriteText(_pageObjects.GetNameInput(driver), "Test Name");
+            _pageObjects.GetSubmitButton(driver).Click();
 
             string message = WaitForCorrectResponse(driver, expectedMessage);
 
+            driver.Close();
             Assert.True(expectedMessage == message, $"Message is not valid.\nExpected:{expectedMessage}\nCurrent:{message}");
         }
 
         [Fact]
         public void DisplayedAjaxIcon()
         {
-            ChromeDriver driver = Helpers.RunPage(PageObjects.PageUrl);
+            ChromeDriver driver = Helpers.RunPage(_pageObjects.PageUrl);
 
-            Helpers.WriteText(PageObjects.GetNameInput(driver), "Test Name");
-            PageObjects.GetSubmitButton(driver).Click();
+            Helpers.WriteText(_pageObjects.GetNameInput(driver), "Test Name");
+            _pageObjects.GetSubmitButton(driver).Click();
             Thread.Sleep(400);
-            bool isIconDisplayed = PageObjects.GetAjaxIcon(driver).Displayed;
+            bool isIconDisplayed = _pageObjects.GetAjaxIcon(driver).Displayed;
 
-            Assert.True(isIconDisplayed,$"Ajax icon is not displayed.");
+            driver.Close();
+            Assert.True(isIconDisplayed, $"Ajax icon is not displayed.");
         }
 
         private string WaitForCorrectResponse(ChromeDriver driver, string expectedMessage)
@@ -98,7 +102,7 @@ namespace SeleniumApplication.Tests.Input
 
             while (waitCounter < 4)
             {
-                message = PageObjects.GetDisplayMessage(driver).Text;
+                message = _pageObjects.GetDisplayMessage(driver).Text;
                 if (message == expectedMessage)
                 {
                     break;

@@ -11,10 +11,12 @@ namespace SeleniumApplication.Tests.Input
 {
     public class SelectDropdownList
     {
+        private readonly PageObjectSelectDropdownList _pageObjects = new PageObjectSelectDropdownList();
+
         [Fact]
         public void CheckUrl()
         {
-            ChromeDriver driver = Helpers.RunPage(PageObjectSelectDropdownList.PageUrl);
+            ChromeDriver driver = Helpers.RunPage(_pageObjects.PageUrl);
 
             Assert.True(driver.Url == "https://www.seleniumeasy.com/test/basic-select-dropdown-demo.html", "Page not exist");
             driver.Close();
@@ -30,12 +32,13 @@ namespace SeleniumApplication.Tests.Input
         [InlineData(PageObjectSelectDropdownList.EnumSelectListValues.Friday)]
         public void SelectFromSelectDropdownListAndCheckDisplay(Enum dropdownListValue)
         {
-            ChromeDriver driver = Helpers.RunPage(PageObjectSelectDropdownList.PageUrl);
+            ChromeDriver driver = Helpers.RunPage(_pageObjects.PageUrl);
 
-           PageObjectSelectDropdownList.GetSelectListDropdown(driver).SelectByValue(dropdownListValue.ToString());
+            _pageObjects.GetSelectListDropdown(driver).SelectByValue(dropdownListValue.ToString());
 
-            string result = PageObjectSelectDropdownList.GetDisplaySelectListValue(driver).Text;
+            string result = _pageObjects.GetDisplaySelectListValue(driver).Text;
 
+            driver.Close();
             Assert.True(result == $"Day selected :- {dropdownListValue.ToString()}", $"Exptected value: Day selected: - {dropdownListValue.ToString()}\nCurrent: {result}");
         }
 
@@ -44,36 +47,36 @@ namespace SeleniumApplication.Tests.Input
         [InlineData(PageObjectSelectDropdownList.XPathButtonGetAllSelected, "Options selected are :")]
         public void ClickButtonWithoutSelectAnyValue(string xPathButton, string expectedValue)
         {
-            ChromeDriver driver = Helpers.RunPage(PageObjectSelectDropdownList.PageUrl);
+            ChromeDriver driver = Helpers.RunPage(_pageObjects.PageUrl);
             driver.FindElementByXPath(xPathButton).Click();
-            string result = PageObjectSelectDropdownList.GetDisplayMultiSelectDropdown(driver).Text;
+            string result = _pageObjects.GetDisplayMultiSelectDropdown(driver).Text;
 
+            driver.Close();
             Assert.True(result == expectedValue, $"Wrong message. \nExpected:{expectedValue}\nCurrent:{result}");
         }
 
         [Fact]
         public void SelectAllValueFromMultiSelectDropdown()
         {
-            ChromeDriver driver = Helpers.RunPage(PageObjectSelectDropdownList.PageUrl);
-            var listOfMultiSelectValues = PageObjectSelectDropdownList.ListOfMultiSelectValue;
+            ChromeDriver driver = Helpers.RunPage(_pageObjects.PageUrl);
+            var listOfMultiSelectValues = _pageObjects.ListOfMultiSelectValue;
             string expectedResult = "Options selected are : California,Florida,New Jersey,New York,Ohio,Texas,Pennsylvania,Washington";
-          
-            var multiSelect = PageObjectSelectDropdownList.GetSelectMultiListDropdown(driver);
-            Actions action= new Actions(driver);
+
+            var multiSelect = _pageObjects.GetSelectMultiListDropdown(driver);
+            Actions action = new Actions(driver);
             action.KeyDown(Keys.LeftControl);
             for (int i = 0; i < listOfMultiSelectValues.Count(); i++)
-            { 
+            {
                 multiSelect.SelectByValue(listOfMultiSelectValues.ElementAt(i));
             }
 
-            var a = multiSelect.AllSelectedOptions;
             action.KeyUp(Keys.LeftControl);
-            PageObjectSelectDropdownList.GetButtonGetAllSelected(driver).Click();
+            _pageObjects.GetButtonGetAllSelected(driver).Click();
 
-            string result = PageObjectSelectDropdownList.GetDisplayMultiSelectDropdown(driver).Text;
+            string result = _pageObjects.GetDisplayMultiSelectDropdown(driver).Text;
 
-            Assert.True(result == expectedResult,$"Expected:{expectedResult}\nCurrent:{result}");
-
+            driver.Close();
+            Assert.True(result == expectedResult, $"Expected:{expectedResult}\nCurrent:{result}");
         }
 
 
