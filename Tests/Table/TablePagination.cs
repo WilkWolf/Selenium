@@ -20,8 +20,7 @@ namespace SeleniumApplication.Tests.Table
             Assert.True(driver.Url == "https://www.seleniumeasy.com/test/table-pagination-demo.html", $"Page not exist \n Current:{driver.Url}\n Expected:https://www.seleniumeasy.com/test/table-pagination-demo.html");
             driver.Close();
         }
-        //   2. sprawdzenie czy są trzy przyciski stron
-        //3. sprawdzenie na stronach czy istnieja/lub nie przyciski next. previous
+
         [Fact]
         public void CheckCountOfRecords()
         {
