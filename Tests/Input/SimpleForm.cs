@@ -8,11 +8,13 @@ namespace SeleniumApplication.Tests.Input
 {
     public class SimpleForm
     {
+        private readonly PageObjectBasicForm _pageObjects = new PageObjectBasicForm();
 
         [Fact]
-        public void CheckUrl() { 
-        
-            ChromeDriver driver = Helpers.RunPage(PageObjectBasicForm.PageUrl);
+        public void CheckUrl()
+        {
+
+            ChromeDriver driver = Helpers.RunPage(_pageObjects.PageUrl);
 
             Assert.True(driver.Url == "https://www.seleniumeasy.com/test/basic-first-form-demo.html", "Page not exist");
             driver.Close();
@@ -21,18 +23,18 @@ namespace SeleniumApplication.Tests.Input
         [Theory]
         [InlineData(PageObjectBasicForm.XPathTextBoxSum1)]
         [InlineData(PageObjectBasicForm.XPathTextBoxSum2)]
-        public void InputNonNumberTextToSumTextBoxForm(string inputId) 
+        public void InputNonNumberTextToSumTextBoxForm(string inputId)
         {
-            ChromeDriver driver = Helpers.RunPage(PageObjectBasicForm.PageUrl);
+            ChromeDriver driver = Helpers.RunPage(_pageObjects.PageUrl);
 
             IWebElement element = driver.FindElementByXPath(inputId);
             Helpers.WriteText(element, "Test");
-            PageObjectBasicForm.GetButtonSubmitSum(driver).Click();
+            _pageObjects.GetButtonSubmitSum(driver).Click();
 
             string result = Helpers.GetValue(element);
-            driver.Close();
 
-            Assert.True(result == "", $"Textbox {inputId} test failed. Value should be a number. \n Expected: Test\n Current: {result}");
+            driver.Close();
+            Assert.True(result == "", $"Textbox {inputId} test failed. Value should be a number. \n Expected:\n Current: {result}");
         }
 
 
@@ -44,17 +46,19 @@ namespace SeleniumApplication.Tests.Input
         [InlineData("")]
         public void SendMessageToFormGetInput(string text)
         {
-            ChromeDriver driver = Helpers.RunPage(PageObjectBasicForm.PageUrl);
+            ChromeDriver driver = Helpers.RunPage(_pageObjects.PageUrl);
 
-            Helpers.WriteText(PageObjectBasicForm.GetTextBoxMessage(driver), text);
-            PageObjectBasicForm.GetButtonSubmitMessage(driver).Click();
-           
-            string result = PageObjectBasicForm.GetDisplayMessage(driver).Text;
+            Helpers.WriteText(_pageObjects.GetTextBoxMessage(driver), text);
+            _pageObjects.GetButtonSubmitMessage(driver).Click();
+
+            string result = _pageObjects.GetDisplayMessage(driver).Text;
+
+            driver.Close();
             Assert.True(result == text, $"Test failed. \n Expected: {text} \n Current: {result} ");
         }
 
         [Theory]
-        [InlineData("1","1","2")]
+        [InlineData("1", "1", "2")]
         [InlineData("0", "0", "0")]
         [InlineData("2000000000", "2000000000", "4000000000")]
 
@@ -78,18 +82,17 @@ namespace SeleniumApplication.Tests.Input
         [InlineData("1a", "1b", "NaN")]
         [InlineData("a", "1b", "NaN")]
         [InlineData("1a", "b", "NaN")]
-        [InlineData("1.1", "1.1", "2.2")]
         [InlineData("1.1", "1.1", "NaN")]
         public void SendMessageToFormGetTotal(string valueA, string valueB, string sum)
         {
-            ChromeDriver driver = Helpers.RunPage(PageObjectBasicForm.PageUrl);
+            ChromeDriver driver = Helpers.RunPage(_pageObjects.PageUrl);
 
-            PageObjectBasicForm.GetTextBoxSum1(driver).SendKeys(valueA);
-            PageObjectBasicForm.GetTextBoxSum2(driver).SendKeys(valueB);
-            PageObjectBasicForm.GetButtonSubmitSum(driver).Click();
-            string result = PageObjectBasicForm.GetDisplaySum(driver).Text;
+            _pageObjects.GetTextBoxSum1(driver).SendKeys(valueA);
+            _pageObjects.GetTextBoxSum2(driver).SendKeys(valueB);
+            _pageObjects.GetButtonSubmitSum(driver).Click();
+            string result = _pageObjects.GetDisplaySum(driver).Text;
 
-
+            driver.Close();
             Assert.True(result == sum, $"Test failed. \n Expected: {sum} \n Current: {result} ");
         }
     }
