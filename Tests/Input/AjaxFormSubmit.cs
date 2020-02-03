@@ -14,9 +14,9 @@ namespace SeleniumApplication.Tests.Input
         public void CheckUrl()
         {
             ChromeDriver driver = Helpers.RunPage(_pageObjects.PageUrl);
-
-            Assert.True(driver.Url == "https://www.seleniumeasy.com/test/ajax-form-submit-demo.html", $"Page not exist \n Current:{driver.Url}\n Expected:https://www.seleniumeasy.com/test/basic-radiobutton-demo.html ");
-            driver.Close();
+            string url = driver.Url;
+            driver.Dispose();
+            Assert.True(url == "https://www.seleniumeasy.com/test/ajax-form-submit-demo.html", $"Page not exist \n Current:{driver.Url}\n Expected:https://www.seleniumeasy.com/test/basic-radiobutton-demo.html ");
         }
 
         [Fact]
@@ -28,7 +28,7 @@ namespace SeleniumApplication.Tests.Input
             _pageObjects.GetSubmitButton(driver).Click();
             bool isValidationDisplayed = _pageObjects.GetNameValidation(driver).Displayed;
 
-            driver.Close();
+            driver.Dispose();
             Assert.True(isValidationDisplayed, "Validations is not displayed");
             Assert.True(isSubmitButtonHidden, "Button is not displayed");
         }
@@ -46,7 +46,7 @@ namespace SeleniumApplication.Tests.Input
 
             bool isValidationDisplayed = _pageObjects.GetNameValidation(driver).Displayed;
 
-            driver.Close();
+            driver.Dispose();
             Assert.False(isValidationDisplayed, "Validations is  displayed");
             Assert.True(isSubmitButtonHidden, "Button is displayed");
         }
@@ -62,7 +62,7 @@ namespace SeleniumApplication.Tests.Input
 
             string message = _pageObjects.GetDisplayMessage(driver).Text;
 
-            driver.Close();
+            driver.Dispose();
             Assert.True(expectedMessage == message, $"Message is not valid.\nExpected:{expectedMessage}\nCurrent:{message}");
         }
 
@@ -77,7 +77,7 @@ namespace SeleniumApplication.Tests.Input
 
             string message = WaitForCorrectResponse(driver, expectedMessage);
 
-            driver.Close();
+            driver.Dispose();
             Assert.True(expectedMessage == message, $"Message is not valid.\nExpected:{expectedMessage}\nCurrent:{message}");
         }
 
@@ -91,7 +91,7 @@ namespace SeleniumApplication.Tests.Input
             Thread.Sleep(400);
             bool isIconDisplayed = _pageObjects.GetAjaxIcon(driver).Displayed;
 
-            driver.Close();
+            driver.Dispose();
             Assert.True(isIconDisplayed, $"Ajax icon is not displayed.");
         }
 
