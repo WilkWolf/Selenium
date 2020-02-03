@@ -15,9 +15,9 @@ namespace SeleniumApplication.Tests.Input
         {
 
             ChromeDriver driver = Helpers.RunPage(_pageObjects.PageUrl);
-
-            Assert.True(driver.Url == "https://www.seleniumeasy.com/test/basic-first-form-demo.html", "Page not exist");
-            driver.Close();
+            string url = driver.Url;
+            driver.Dispose();
+            Assert.True(url == "https://www.seleniumeasy.com/test/basic-first-form-demo.html", "Page not exist");
         }
 
         [Theory]
@@ -33,7 +33,7 @@ namespace SeleniumApplication.Tests.Input
 
             string result = Helpers.GetValue(element);
 
-            driver.Close();
+            driver.Dispose();
             Assert.True(result == "", $"Textbox {inputId} test failed. Value should be a number. \n Expected:\n Current: {result}");
         }
 
@@ -53,7 +53,7 @@ namespace SeleniumApplication.Tests.Input
 
             string result = _pageObjects.GetDisplayMessage(driver).Text;
 
-            driver.Close();
+            driver.Dispose();
             Assert.True(result == text, $"Test failed. \n Expected: {text} \n Current: {result} ");
         }
 
@@ -92,7 +92,7 @@ namespace SeleniumApplication.Tests.Input
             _pageObjects.GetButtonSubmitSum(driver).Click();
             string result = _pageObjects.GetDisplaySum(driver).Text;
 
-            driver.Close();
+            driver.Dispose();
             Assert.True(result == sum, $"Test failed. \n Expected: {sum} \n Current: {result} ");
         }
     }

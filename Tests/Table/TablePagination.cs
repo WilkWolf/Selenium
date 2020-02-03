@@ -15,9 +15,9 @@ namespace SeleniumApplication.Tests.Table
         public void CheckUrl()
         {
             ChromeDriver driver = Helpers.RunPage(_pageObjects.PageUrl);
-
-            Assert.True(driver.Url == "https://www.seleniumeasy.com/test/table-pagination-demo.html", $"Page not exist \n Current:{driver.Url}\n Expected:https://www.seleniumeasy.com/test/table-pagination-demo.html");
-            driver.Close();
+            string url = driver.Url;
+            Assert.True(url == "https://www.seleniumeasy.com/test/table-pagination-demo.html", $"Page not exist \n Current:{driver.Url}\n Expected:https://www.seleniumeasy.com/test/table-pagination-demo.html");
+            driver.Dispose();
         }
 
         [Fact]
@@ -27,7 +27,7 @@ namespace SeleniumApplication.Tests.Table
             IList<IWebElement> tableRows = _pageObjects.GetTableBody(driver).FindElements(By.TagName("tr"));
             int countOfTableRows = tableRows.Count;
 
-            driver.Close();
+            driver.Dispose();
             Assert.True(countOfTableRows == 15, $"Table doesn't has expected number of row. \nExpected:15\nCurrent:{countOfTableRows}");
         }
 
@@ -39,7 +39,7 @@ namespace SeleniumApplication.Tests.Table
             bool secondPage = _pageObjects.GetSecondPage(driver).Displayed;
             bool thirdPage = _pageObjects.GetThirdPage(driver).Displayed;
 
-            driver.Close();
+            driver.Dispose();
             Assert.True(firstPage, "Button '1' not exist");
             Assert.True(secondPage, "Button '2' not exist");
             Assert.True(thirdPage, "Button '3' not exist");
@@ -52,7 +52,7 @@ namespace SeleniumApplication.Tests.Table
             bool nextButton = _pageObjects.GetNext(driver).Displayed;
             bool previousButton = _pageObjects.GetPrevious(driver).Displayed;
 
-            driver.Close();
+            driver.Dispose();
             Assert.True(nextButton, "Button '>>' not exist");
             Assert.False(previousButton, "Button '<<' exist");
         }
@@ -65,7 +65,7 @@ namespace SeleniumApplication.Tests.Table
             bool nextButton = _pageObjects.GetNext(driver).Displayed;
             bool previousButton = _pageObjects.GetPrevious(driver).Displayed;
 
-            driver.Close();
+            driver.Dispose();
             Assert.True(nextButton, "Button '>>' not exist");
             Assert.True(previousButton, "Button '<<' not exist");
         }
@@ -78,7 +78,7 @@ namespace SeleniumApplication.Tests.Table
             bool nextButton = _pageObjects.GetNext(driver).Displayed;
             bool previousButton = _pageObjects.GetPrevious(driver).Displayed;
 
-            driver.Close();
+            driver.Dispose();
             Assert.False(nextButton, "Button '>>'  exist");
             Assert.True(previousButton, "Button '<<' not exist");
         }
