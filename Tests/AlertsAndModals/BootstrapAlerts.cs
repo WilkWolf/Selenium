@@ -22,97 +22,112 @@ namespace SeleniumApplication.Tests.AlertsAndModals
         }
 
         [Theory]
-        [InlineData("AutocloseableSuccess", PageObjectBootstrapAlerts.XPathButtonAutocloseableSuccesMessage, PageObjectBootstrapAlerts.XPathAlertsAutocloseableSuccesMessage)]
-        [InlineData("AutocloseableDanger", PageObjectBootstrapAlerts.XPathButtonAutocloseableDangerMessage, PageObjectBootstrapAlerts.XPathAlertsAutocloseableDangerMessage)]
-        [InlineData("AutocloseableWarning", PageObjectBootstrapAlerts.XPathButtonAutocloseableWarningMessage, PageObjectBootstrapAlerts.XPathAlertsAutocloseableWarningMessage)]
-        [InlineData("AutocloseableInfo", PageObjectBootstrapAlerts.XPathButtonAutocloseableInfoMessage, PageObjectBootstrapAlerts.XPathAlertsAutocloseableInfoMessage)]
-        [InlineData("NormalSuccess", PageObjectBootstrapAlerts.XPathButtonNormalSuccessMessage, PageObjectBootstrapAlerts.XPathAlertsNormalSuccessMessage)]
-        [InlineData("NormalDanger", PageObjectBootstrapAlerts.XPathButtonNormalDangerMessage, PageObjectBootstrapAlerts.XPathAlertsNormalDangerMessage)]
-        [InlineData("NormalWarnin", PageObjectBootstrapAlerts.XPathButtonNormalWarningMessage, PageObjectBootstrapAlerts.XPathAlertsNormalWarningMessage)]
-        [InlineData("NormalInfo", PageObjectBootstrapAlerts.XPathButtonNormalInfoMessage, PageObjectBootstrapAlerts.XPathAlertsNormalInfoMessage)]
-        public void CheckIfMessageDisplay(string alertName, string xPathButton, string xPathAlert)
+        [InlineData(PageObjectBootstrapAlerts.XPathButtonAutocloseableSuccesMessage, PageObjectBootstrapAlerts.XPathAlertsAutocloseableSuccesMessage)]
+        [InlineData(PageObjectBootstrapAlerts.XPathButtonAutocloseableDangerMessage, PageObjectBootstrapAlerts.XPathAlertsAutocloseableDangerMessage)]
+        [InlineData(PageObjectBootstrapAlerts.XPathButtonAutocloseableWarningMessage, PageObjectBootstrapAlerts.XPathAlertsAutocloseableWarningMessage)]
+        [InlineData(PageObjectBootstrapAlerts.XPathButtonAutocloseableInfoMessage, PageObjectBootstrapAlerts.XPathAlertsAutocloseableInfoMessage)]
+        [InlineData(PageObjectBootstrapAlerts.XPathButtonNormalSuccessMessage, PageObjectBootstrapAlerts.XPathAlertsNormalSuccessMessage)]
+        [InlineData(PageObjectBootstrapAlerts.XPathButtonNormalDangerMessage, PageObjectBootstrapAlerts.XPathAlertsNormalDangerMessage)]
+        [InlineData(PageObjectBootstrapAlerts.XPathButtonNormalWarningMessage, PageObjectBootstrapAlerts.XPathAlertsNormalWarningMessage)]
+        [InlineData(PageObjectBootstrapAlerts.XPathButtonNormalInfoMessage, PageObjectBootstrapAlerts.XPathAlertsNormalInfoMessage)]
+        public void CheckIfMessageDisplay(string xPathButton, string xPathAlert)
         {
             ChromeDriver driver = Helpers.RunPage(_pageObjects.PageUrl);
 
             Helpers.GetWebElement(driver, xPathButton).Click();
             bool isElementDisplayed = Helpers.GetWebElement(driver, xPathAlert).Displayed;
+            string elementsName = RetriveNamefromXPath(xPathButton);
 
-            Helpers.AssertTrue(driver, isElementDisplayed, $"Alerts {alertName} is not displayed");
+            Helpers.AssertTrue(driver, isElementDisplayed, $"Alerts {elementsName} is not displayed");
         }
 
         [Theory]
-        [InlineData("AutocloseableSuccess",5, PageObjectBootstrapAlerts.XPathButtonAutocloseableSuccesMessage, PageObjectBootstrapAlerts.XPathAlertsAutocloseableSuccesMessage)]
-        [InlineData("AutocloseableDanger",5, PageObjectBootstrapAlerts.XPathButtonAutocloseableDangerMessage, PageObjectBootstrapAlerts.XPathAlertsAutocloseableDangerMessage)]
-        [InlineData("AutocloseableWarning",3, PageObjectBootstrapAlerts.XPathButtonAutocloseableWarningMessage, PageObjectBootstrapAlerts.XPathAlertsAutocloseableWarningMessage)]
-        [InlineData("AutocloseableInfo",6, PageObjectBootstrapAlerts.XPathButtonAutocloseableInfoMessage, PageObjectBootstrapAlerts.XPathAlertsAutocloseableInfoMessage)]
-        public void CheckAutocloseableAlertsClose(string alertName, int visibilityTimeInSecond, string xPathButton, string xPathAlert)
+        [InlineData(5, PageObjectBootstrapAlerts.XPathButtonAutocloseableSuccesMessage, PageObjectBootstrapAlerts.XPathAlertsAutocloseableSuccesMessage)]
+        [InlineData(5, PageObjectBootstrapAlerts.XPathButtonAutocloseableDangerMessage, PageObjectBootstrapAlerts.XPathAlertsAutocloseableDangerMessage)]
+        [InlineData(3, PageObjectBootstrapAlerts.XPathButtonAutocloseableWarningMessage, PageObjectBootstrapAlerts.XPathAlertsAutocloseableWarningMessage)]
+        [InlineData(6, PageObjectBootstrapAlerts.XPathButtonAutocloseableInfoMessage, PageObjectBootstrapAlerts.XPathAlertsAutocloseableInfoMessage)]
+        public void CheckAutocloseableAlertsClose(int visibilityTimeInSecond, string xPathButton, string xPathAlert)
         {
             ChromeDriver driver = Helpers.RunPage(_pageObjects.PageUrl);
 
-
-            int visibilityTimeInHalfSecond = visibilityTimeInSecond * 2;
-            int counterOfWaitLoop = 1;
-            bool isTimeOfVisibilityCorrect = false;
-
             Helpers.GetWebElement(driver, xPathButton).Click();
-            IWebElement alert = Helpers.GetWebElement(driver, xPathAlert);
+            bool isTimeOfVisibilityCorrect = WaitForAlertClose(visibilityTimeInSecond, xPathAlert, driver);
 
-            while (counterOfWaitLoop <= 20)
-            {
-                Thread.Sleep(500);
+            string elementsName = RetriveNamefromXPath(xPathButton);
 
-                if (CheckIfAlertsIsNotDisplayedBeforeEndOfTime(driver, xPathAlert,visibilityTimeInHalfSecond,counterOfWaitLoop) )
-                {
-                    isTimeOfVisibilityCorrect = false;
-                    break;
-                }
-                else if (CheckIfAlertIsDisplayedAfterVisibilityTime(driver, xPathAlert, visibilityTimeInHalfSecond, counterOfWaitLoop))
-                {
-                    isTimeOfVisibilityCorrect = false;
-                    break;
-                }
-                else if (CheckIfAlertIsNotDisplayedInRightTime(driver, xPathAlert, visibilityTimeInHalfSecond, counterOfWaitLoop))
-                {
-                    isTimeOfVisibilityCorrect = true;
-                    break;
-                }
-                counterOfWaitLoop++;
-            }
-            Helpers.AssertTrue(driver, isTimeOfVisibilityCorrect, $"Alerts {alertName} is not correct displayed for {visibilityTimeInSecond} seconds. Current time is:{counterOfWaitLoop} of half seconds");
+            Helpers.AssertTrue(driver, isTimeOfVisibilityCorrect, $"Alerts {elementsName} is not correct displayed for {visibilityTimeInSecond} seconds.");
         }
 
         [Theory]
-        [InlineData("AutocloseableSuccess", PageObjectBootstrapAlerts.XPathButtonAutocloseableSuccesMessage)]
-        [InlineData("AutocloseableDanger", PageObjectBootstrapAlerts.XPathButtonAutocloseableDangerMessage)]
-        [InlineData("AutocloseableWarning", PageObjectBootstrapAlerts.XPathButtonAutocloseableWarningMessage)]
-        [InlineData("AutocloseableInfo", PageObjectBootstrapAlerts.XPathButtonAutocloseableInfoMessage)]
-        public void CheckIfButtonIsDisabledWhenClickOnAoutcloseableButton(string alertName, string xPathButton )
+        [InlineData(PageObjectBootstrapAlerts.XPathButtonAutocloseableSuccesMessage)]
+        [InlineData(PageObjectBootstrapAlerts.XPathButtonAutocloseableDangerMessage)]
+        [InlineData(PageObjectBootstrapAlerts.XPathButtonAutocloseableWarningMessage)]
+        [InlineData(PageObjectBootstrapAlerts.XPathButtonAutocloseableInfoMessage)]
+        public void CheckIfButtonIsDisabledWhenClickOnAoutcloseableButton(string xPathButton)
         {
             ChromeDriver driver = Helpers.RunPage(_pageObjects.PageUrl);
 
             Helpers.GetWebElement(driver, xPathButton).Click();
             bool isDisabled = Helpers.GetWebElement(driver, xPathButton).Enabled;
 
-            Helpers.AssertFalse(driver,isDisabled, $"Button {alertName} is enabled when should be disabled.");
+            string elementsName = RetriveNamefromXPath(xPathButton);
+
+            Helpers.AssertFalse(driver, isDisabled, $"Button {elementsName} is enabled when should be disabled.");
         }
 
 
-        private bool CheckIfAlertsIsNotDisplayedBeforeEndOfTime(ChromeDriver driver, string xPathAlert, int visibilityTimeInHalfSecond, int counterOfWaitLoop)
+        private bool CheckIfAlertsIsNotDisplayedBeforeEndOfTime(IWebElement alert, int visibilityTimeInHalfSecond, int counterOfWaitLoop)
         {
-            var  alert = Helpers.GetWebElement(driver, xPathAlert);
             return !alert.Displayed && visibilityTimeInHalfSecond > counterOfWaitLoop;
         }
-        private bool CheckIfAlertIsNotDisplayedInRightTime(ChromeDriver driver, string xPathAlert, int visibilityTimeInHalfSecond, int counterOfWaitLoop)
+        private bool CheckIfAlertIsNotDisplayedInRightTime(IWebElement alert, int visibilityTimeInHalfSecond, int counterOfWaitLoop)
         {
-            var alert = Helpers.GetWebElement(driver, xPathAlert);
             return !alert.Displayed && visibilityTimeInHalfSecond == counterOfWaitLoop;
         }
-        private bool CheckIfAlertIsDisplayedAfterVisibilityTime(ChromeDriver driver, string xPathAlert, int visibilityTimeInHalfSecond, int counterOfWaitLoop)
+        private bool CheckIfAlertIsDisplayedAfterVisibilityTime(IWebElement alert, int visibilityTimeInHalfSecond, int counterOfWaitLoop)
         {
-            var alert = Helpers.GetWebElement(driver, xPathAlert);
             return (alert.Displayed && visibilityTimeInHalfSecond < counterOfWaitLoop) ||
                    visibilityTimeInHalfSecond < counterOfWaitLoop;
         }
 
+        private bool WaitForAlertClose(int visibilityTime, string xPathAlert, ChromeDriver driver)
+        {
+            int counterOfWaitLoop = 1;
+            bool isTimeOfVisibilityCorrect = false;
+
+            while (counterOfWaitLoop <= 20)
+            {
+                Thread.Sleep(1100); // slight margin of error
+                var alert = Helpers.GetWebElement(driver, xPathAlert);
+                if (CheckIfAlertsIsNotDisplayedBeforeEndOfTime(alert, visibilityTime,
+                    counterOfWaitLoop))
+                {
+                    break;
+                }
+                else if (CheckIfAlertIsDisplayedAfterVisibilityTime(alert, visibilityTime,
+                    counterOfWaitLoop))
+                {
+                    break;
+                }
+                else if (CheckIfAlertIsNotDisplayedInRightTime(alert, visibilityTime,
+                    counterOfWaitLoop))
+                {
+                    isTimeOfVisibilityCorrect = true;
+                    break;
+                }
+
+                counterOfWaitLoop++;
+            }
+
+            return isTimeOfVisibilityCorrect;
+        }
+
+        private string RetriveNamefromXPath(string xPath)
+        {
+            string name = xPath.Remove(0, 9);
+            return name.Remove(name.Length - 2, 2);
+        }
+
     }
+
 }
