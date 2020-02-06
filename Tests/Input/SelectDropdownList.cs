@@ -18,8 +18,8 @@ namespace SeleniumApplication.Tests.Input
         {
             ChromeDriver driver = Helpers.RunPage(_pageObjects.PageUrl);
             string url = driver.Url;
-            driver.Dispose();
-            Assert.True(url == "https://www.seleniumeasy.com/test/basic-select-dropdown-demo.html", "Page not exist");
+             
+            Helpers.AssertTrue(driver,url == "https://www.seleniumeasy.com/test/basic-select-dropdown-demo.html", "Page not exist");
         }
 
         [Theory]
@@ -38,8 +38,8 @@ namespace SeleniumApplication.Tests.Input
 
             string result = _pageObjects.GetDisplaySelectListValue(driver).Text;
 
-            driver.Dispose();
-            Assert.True(result == $"Day selected :- {dropdownListValue.ToString()}", $"Exptected value: Day selected: - {dropdownListValue.ToString()}\nCurrent: {result}");
+             
+            Helpers.AssertTrue(driver,result == $"Day selected :- {dropdownListValue.ToString()}", $"Exptected value: Day selected: - {dropdownListValue.ToString()}\nCurrent: {result}");
         }
 
         [Theory]
@@ -51,8 +51,8 @@ namespace SeleniumApplication.Tests.Input
             driver.FindElementByXPath(xPathButton).Click();
             string result = _pageObjects.GetDisplayMultiSelectDropdown(driver).Text;
 
-            driver.Dispose();
-            Assert.True(result == expectedValue, $"Wrong message. \nExpected:{expectedValue}\nCurrent:{result}");
+             
+            Helpers.AssertTrue(driver,result == expectedValue, $"Wrong message. \nExpected:{expectedValue}\nCurrent:{result}");
         }
 
         [Fact]
@@ -75,8 +75,8 @@ namespace SeleniumApplication.Tests.Input
 
             string result = _pageObjects.GetDisplayMultiSelectDropdown(driver).Text;
 
-            driver.Dispose();
-            Assert.True(result == expectedResult, $"Expected:{expectedResult}\nCurrent:{result}");
+             
+            Helpers.AssertTrue(driver,result == expectedResult, $"Expected:{expectedResult}\nCurrent:{result}");
         }
 
 
