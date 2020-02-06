@@ -79,24 +79,22 @@ namespace SeleniumApplication.Tests.AlertsAndModals
                 counterOfWaitLoop++;
             }
 
-            driver.Quit();
              Helpers.AssertTrue(driver, isTimeOfVisibilityCorrect, $"Alerts {alertName} is not correct displayed for {visibilityTimeInSecond} seconds. Current time is:{counterOfWaitLoop} of half seconds");
         }
 
         [Theory]
-        [InlineData("AutocloseableSuccess", PageObjectBootstrapAlerts.XPathButtonAutocloseableSuccesMessage, PageObjectBootstrapAlerts.XPathAlertsAutocloseableSuccesMessage)]
-        [InlineData("AutocloseableDanger", PageObjectBootstrapAlerts.XPathButtonAutocloseableDangerMessage, PageObjectBootstrapAlerts.XPathAlertsAutocloseableDangerMessage)]
-        [InlineData("AutocloseableWarning", PageObjectBootstrapAlerts.XPathButtonAutocloseableWarningMessage, PageObjectBootstrapAlerts.XPathAlertsAutocloseableWarningMessage)]
-        [InlineData("AutocloseableInfo", PageObjectBootstrapAlerts.XPathButtonAutocloseableInfoMessage, PageObjectBootstrapAlerts.XPathAlertsAutocloseableInfoMessage)]
-        public void CheckIfButtonIsDisabledWhenClickOnAoutcloseableButton(string alertName, string xPathButton, string xPathAlert)
+        [InlineData("AutocloseableSuccess", PageObjectBootstrapAlerts.XPathButtonAutocloseableSuccesMessage)]
+        [InlineData("AutocloseableDanger", PageObjectBootstrapAlerts.XPathButtonAutocloseableDangerMessage)]
+        [InlineData("AutocloseableWarning", PageObjectBootstrapAlerts.XPathButtonAutocloseableWarningMessage)]
+        [InlineData("AutocloseableInfo", PageObjectBootstrapAlerts.XPathButtonAutocloseableInfoMessage)]
+        public void CheckIfButtonIsDisabledWhenClickOnAoutcloseableButton(string alertName, string xPathButton )
         {
             ChromeDriver driver = Helpers.RunPage(_pageObjects.PageUrl);
 
             Helpers.GetWebElement(driver, xPathButton).Click();
             bool isDisabled = Helpers.GetWebElement(driver, xPathButton).Enabled;
 
-            driver.Quit();
-            Assert.False(isDisabled, $"Button {alertName} is enabled when should be disabled.");
+            Helpers.AssertFalse(driver,isDisabled, $"Button {alertName} is enabled when should be disabled.");
         }
     }
 }
