@@ -1,5 +1,6 @@
 ﻿
 using System.Threading;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using SeleniumApplication.PageObject.AlertsAndModals;
 using SeleniumApplication.Shared;
@@ -18,7 +19,6 @@ namespace SeleniumApplication.Tests.AlertsAndModals
             string url = driver.Url;
 
             Helpers.AssertTrue(driver, url == "https://www.seleniumeasy.com/test/bootstrap-alert-messages-demo.html", $"Page not exist \n Current:{driver.Url}\n Expected:https://www.seleniumeasy.com/test/bootstrap-alert-messages-demo.html");
-           //  Helpers.AssertTrue(driver, url == "https://www.seleniumeasy.com/test/bootstrap-alert-messages-demo.html", $"Page not exist \n Current:{driver.Url}\n Expected:https://www.seleniumeasy.com/test/bootstrap-alert-messages-demo.html");
         }
 
         [Theory]
@@ -55,31 +55,30 @@ namespace SeleniumApplication.Tests.AlertsAndModals
             bool isTimeOfVisibilityCorrect = false;
 
             Helpers.GetWebElement(driver, xPathButton).Click();
+            IWebElement alert = Helpers.GetWebElement(driver, xPathAlert);
+
             while (counterOfWaitLoop <= 20)
             {
                 Thread.Sleep(500);
 
-                // jezeli alert nie jest wyswietlony i nie uplynął wymagany czas to przerywa i zwraca false 
-                if (!Helpers.GetWebElement(driver, xPathAlert).Displayed && visibilityTimeInHalfSecond > counterOfWaitLoop)
+                if (CheckIfAlertsIsNotDisplayedBeforeEndOfTime(driver, xPathAlert,visibilityTimeInHalfSecond,counterOfWaitLoop) )
                 {
                     isTimeOfVisibilityCorrect = false;
                     break;
                 }
-                // jezeli alert jest wyswieylony po uplynieciu wymaganego czasu to przerywa i zwraca false 
-                else if ((Helpers.GetWebElement(driver, xPathAlert).Displayed && visibilityTimeInHalfSecond < counterOfWaitLoop) || visibilityTimeInHalfSecond < counterOfWaitLoop)
+                else if (CheckIfAlertIsDisplayedAfterVisibilityTime(driver, xPathAlert, visibilityTimeInHalfSecond, counterOfWaitLoop))
                 {
                     isTimeOfVisibilityCorrect = false;
                     break;
-                }// jeżeli alert nie jest widoczny i czas równa się przebiegowi pętli to zwróć true
-                else if (!Helpers.GetWebElement(driver, xPathAlert).Displayed && visibilityTimeInHalfSecond == counterOfWaitLoop)
+                }
+                else if (CheckIfAlertIsNotDisplayedInRightTime(driver, xPathAlert, visibilityTimeInHalfSecond, counterOfWaitLoop))
                 {
                     isTimeOfVisibilityCorrect = true;
                     break;
                 }
                 counterOfWaitLoop++;
             }
-
-             Helpers.AssertTrue(driver, isTimeOfVisibilityCorrect, $"Alerts {alertName} is not correct displayed for {visibilityTimeInSecond} seconds. Current time is:{counterOfWaitLoop} of half seconds");
+            Helpers.AssertTrue(driver, isTimeOfVisibilityCorrect, $"Alerts {alertName} is not correct displayed for {visibilityTimeInSecond} seconds. Current time is:{counterOfWaitLoop} of half seconds");
         }
 
         [Theory]
@@ -96,5 +95,24 @@ namespace SeleniumApplication.Tests.AlertsAndModals
 
             Helpers.AssertFalse(driver,isDisabled, $"Button {alertName} is enabled when should be disabled.");
         }
+
+
+        private bool CheckIfAlertsIsNotDisplayedBeforeEndOfTime(ChromeDriver driver, string xPathAlert, int visibilityTimeInHalfSecond, int counterOfWaitLoop)
+        {
+            var  alert = Helpers.GetWebElement(driver, xPathAlert);
+            return !alert.Displayed && visibilityTimeInHalfSecond > counterOfWaitLoop;
+        }
+        private bool CheckIfAlertIsNotDisplayedInRightTime(ChromeDriver driver, string xPathAlert, int visibilityTimeInHalfSecond, int counterOfWaitLoop)
+        {
+            var alert = Helpers.GetWebElement(driver, xPathAlert);
+            return !alert.Displayed && visibilityTimeInHalfSecond == counterOfWaitLoop;
+        }
+        private bool CheckIfAlertIsDisplayedAfterVisibilityTime(ChromeDriver driver, string xPathAlert, int visibilityTimeInHalfSecond, int counterOfWaitLoop)
+        {
+            var alert = Helpers.GetWebElement(driver, xPathAlert);
+            return (alert.Displayed && visibilityTimeInHalfSecond < counterOfWaitLoop) ||
+                   visibilityTimeInHalfSecond < counterOfWaitLoop;
+        }
+
     }
 }
