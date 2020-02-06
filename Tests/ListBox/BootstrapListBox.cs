@@ -17,7 +17,7 @@ namespace SeleniumApplication.Tests.ListBox
             ChromeDriver driver = Helpers.RunPage(_pageObjects.PageUrl);
             string url = driver.Url;
              
-            Helpers.AssertTrue(driver,url == "https://www.seleniumeasy.com/test/bootstrap-dual-list-box-demo.html", $"Page not exist \n Current:{driver.Url}\n Expected:https://www.seleniumeasy.com/test/bootstrap-dual-list-box-demo.html");
+            Helpers.AssertTrue(driver,url == "https://www.seleniumeasy.com/test/bootstrap-dual-list-box-demo.html", $"Page not exist \n Current:{url}\n Expected:https://www.seleniumeasy.com/test/bootstrap-dual-list-box-demo.html");
         }
 
         [Fact]

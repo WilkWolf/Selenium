@@ -17,7 +17,7 @@ namespace SeleniumApplication.Tests.AlertsAndModals
             ChromeDriver driver = Helpers.RunPage(_pageObjects.PageUrl);
             string url = driver.Url;
 
-            Helpers.AssertTrue(driver, url == "https://www.seleniumeasy.com/test/bootstrap-modal-demo.html", $"Page not exist \n Current:{driver.Url}\n Expected:https://www.seleniumeasy.com/test/bootstrap-modal-demo.html");
+            Helpers.AssertTrue(driver, url == "https://www.seleniumeasy.com/test/bootstrap-modal-demo.html", $"Page not exist \n Current:{url}\n Expected:https://www.seleniumeasy.com/test/bootstrap-modal-demo.html");
         }
 
 
