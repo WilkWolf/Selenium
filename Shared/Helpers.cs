@@ -66,7 +66,7 @@ namespace SeleniumApplication.Shared
         public static void AssertTrue(ChromeDriver driver, bool condition, string message)
         {
             driver.Quit();
-             Assert.True(condition, message);
+            Assert.True(condition, message);
         }
 
         public static void AssertFalse(ChromeDriver driver, bool condition, string message)
@@ -77,3 +77,5 @@ namespace SeleniumApplication.Shared
 
     }
 }
+
+// 103/78/21/4

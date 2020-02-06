@@ -79,7 +79,6 @@ namespace SeleniumApplication.Tests.AlertsAndModals
                 counterOfWaitLoop++;
             }
 
-            driver.Quit();
              Helpers.AssertTrue(driver, isTimeOfVisibilityCorrect, $"Alerts {alertName} is not correct displayed for {visibilityTimeInSecond} seconds. Current time is:{counterOfWaitLoop} of half seconds");
         }
 
@@ -95,8 +94,7 @@ namespace SeleniumApplication.Tests.AlertsAndModals
             Helpers.GetWebElement(driver, xPathButton).Click();
             bool isDisabled = Helpers.GetWebElement(driver, xPathButton).Enabled;
 
-            driver.Quit();
-            Assert.False(isDisabled, $"Button {alertName} is enabled when should be disabled.");
+            Helpers.AssertFalse(driver,isDisabled, $"Button {alertName} is enabled when should be disabled.");
         }
     }
 }
