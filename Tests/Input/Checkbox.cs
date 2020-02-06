@@ -15,7 +15,7 @@ namespace SeleniumApplication.Tests.Input
         {
             ChromeDriver driver = Helpers.RunPage(_pageObjects.PageUrl);
             string url = driver.Url;
-            driver.Dispose();
+            driver.Quit();
             Assert.True(url == "https://www.seleniumeasy.com/test/basic-checkbox-demo.html", "Page not exist");
         }
 
@@ -27,7 +27,7 @@ namespace SeleniumApplication.Tests.Input
             _pageObjects.GetCheckBoxAge(driver).Click();
             string result = _pageObjects.GetMessageSelectedAge(driver).Text;
 
-            driver.Dispose();
+            driver.Quit();
             Assert.True(result == "Success - Check box is checked", "Message is not correct");
         }
 
@@ -44,7 +44,7 @@ namespace SeleniumApplication.Tests.Input
             checkBox.Click();
             string result = Helpers.GetValue(_pageObjects.GetButtonCheck(driver));
 
-            driver.Dispose();
+            driver.Quit();
             Assert.True(result == "Check All", $"Message is not correct \n Current: {result} \n Expected: Check All");
         }
 
@@ -60,7 +60,7 @@ namespace SeleniumApplication.Tests.Input
 
             string result = Helpers.GetValue(_pageObjects.GetButtonCheck(driver));
 
-            driver.Dispose();
+            driver.Quit();
             Assert.True(result == "Uncheck All", $"Message is not correct \n Current: {result} \n Expected: Check All");
         }
 
@@ -78,7 +78,7 @@ namespace SeleniumApplication.Tests.Input
 
             string result = Helpers.GetValue(_pageObjects.GetButtonCheck(driver));
 
-            driver.Dispose();
+            driver.Quit();
             Assert.True(result == "Check All", $"Message is not correct \n Current: {result} \n Expected: Check All");
         }
 
@@ -93,7 +93,7 @@ namespace SeleniumApplication.Tests.Input
 
             string result = Helpers.GetValue(_pageObjects.GetButtonCheck(driver));
 
-            driver.Dispose();
+            driver.Quit();
             Assert.True(result == "Check All", $"Message is not correct \n Current: {result} \n Expected: Check All");
         }
 

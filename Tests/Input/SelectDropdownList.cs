@@ -18,7 +18,7 @@ namespace SeleniumApplication.Tests.Input
         {
             ChromeDriver driver = Helpers.RunPage(_pageObjects.PageUrl);
             string url = driver.Url;
-            driver.Dispose();
+            driver.Quit();
             Assert.True(url == "https://www.seleniumeasy.com/test/basic-select-dropdown-demo.html", "Page not exist");
         }
 
@@ -38,7 +38,7 @@ namespace SeleniumApplication.Tests.Input
 
             string result = _pageObjects.GetDisplaySelectListValue(driver).Text;
 
-            driver.Dispose();
+            driver.Quit();
             Assert.True(result == $"Day selected :- {dropdownListValue.ToString()}", $"Exptected value: Day selected: - {dropdownListValue.ToString()}\nCurrent: {result}");
         }
 
@@ -51,7 +51,7 @@ namespace SeleniumApplication.Tests.Input
             driver.FindElementByXPath(xPathButton).Click();
             string result = _pageObjects.GetDisplayMultiSelectDropdown(driver).Text;
 
-            driver.Dispose();
+            driver.Quit();
             Assert.True(result == expectedValue, $"Wrong message. \nExpected:{expectedValue}\nCurrent:{result}");
         }
 
@@ -75,7 +75,7 @@ namespace SeleniumApplication.Tests.Input
 
             string result = _pageObjects.GetDisplayMultiSelectDropdown(driver).Text;
 
-            driver.Dispose();
+            driver.Quit();
             Assert.True(result == expectedResult, $"Expected:{expectedResult}\nCurrent:{result}");
         }
 

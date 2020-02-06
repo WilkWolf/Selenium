@@ -14,7 +14,7 @@ namespace SeleniumApplication.Tests.Input
         {
             ChromeDriver driver = Helpers.RunPage(_pageObjects.PageUrl);
             string url = driver.Url;
-            driver.Dispose();
+            driver.Quit();
             Assert.True(url == "https://www.seleniumeasy.com/test/basic-radiobutton-demo.html", $"Page not exist \n Current:{driver.Url}\n Expected:https://www.seleniumeasy.com/test/basic-radiobutton-demo.html ");
         }
 
@@ -27,7 +27,7 @@ namespace SeleniumApplication.Tests.Input
             Helpers.GetWebElement(driver, PageObjectBasicRadioButton.XPathButtonGetCheckedValue).Click();
             string result = _pageObjects.GetDisplayFirstMessage(driver).Text;
 
-            driver.Dispose();
+            driver.Quit();
             Assert.True(result == "Radio button is Not checked", $"Button text is not as expected \n Expected: Checked value \n Current: {result}");
         }
 
@@ -40,7 +40,7 @@ namespace SeleniumApplication.Tests.Input
             string result = _pageObjects.GetGroupDisplay(driver).Text;
             string expectedResult = "Sex :\r\nAge group:";
 
-            driver.Dispose();
+            driver.Quit();
             Assert.True(result == expectedResult, $"Button text is not as expected \n Expected: {expectedResult}\n Current: {result}");
         }
 
@@ -55,7 +55,7 @@ namespace SeleniumApplication.Tests.Input
 
             string result = _pageObjects.GetDisplayFirstMessage(driver).Text;
 
-            driver.Dispose();
+            driver.Quit();
             Assert.True(result == $"Radio button '{gender}' is checked", $"Button text is not as expected \n Expected: Checked value \n Current: {result}");
         }
 
@@ -87,7 +87,7 @@ namespace SeleniumApplication.Tests.Input
 
             string result = _pageObjects.GetGroupDisplay(driver).Text;
 
-            driver.Dispose();
+            driver.Quit();
             Assert.True(result == expectedMessage, $"Result is not correct \nExpected:{expectedMessage}\nCurrent:{result}");
         }
 

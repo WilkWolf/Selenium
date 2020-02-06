@@ -16,7 +16,7 @@ namespace SeleniumApplication.Tests.ListBox
         {
             ChromeDriver driver = Helpers.RunPage(_pageObjects.PageUrl);
             string url = driver.Url;
-            driver.Dispose();
+            driver.Quit();
             Assert.True(url == "https://www.seleniumeasy.com/test/bootstrap-dual-list-box-demo.html", $"Page not exist \n Current:{driver.Url}\n Expected:https://www.seleniumeasy.com/test/bootstrap-dual-list-box-demo.html");
         }
 
@@ -33,7 +33,7 @@ namespace SeleniumApplication.Tests.ListBox
             int leftMenuElementsCountAfter = GetCountOfElementList(_pageObjects.GetLeftListBox(driver));
             int rightMenuElementsCountAfter = GetCountOfElementList(_pageObjects.GetRightListBox(driver));
 
-            driver.Dispose();
+            driver.Quit();
             Assert.True(leftMenuElementsCountBefore == leftMenuElementsCountAfter + 1);
             Assert.True(rightMenuElementsCountBefore == rightMenuElementsCountAfter - 1);
         }
@@ -51,7 +51,7 @@ namespace SeleniumApplication.Tests.ListBox
             int leftMenuElementsCountAfter = GetCountOfElementList(_pageObjects.GetLeftListBox(driver));
             int rightMenuElementsCountAfter = GetCountOfElementList(_pageObjects.GetRightListBox(driver));
 
-            driver.Dispose();
+            driver.Quit();
             Assert.True(leftMenuElementsCountBefore == leftMenuElementsCountAfter - 1);
             Assert.True(rightMenuElementsCountBefore == rightMenuElementsCountAfter + 1);
         }
@@ -70,7 +70,7 @@ namespace SeleniumApplication.Tests.ListBox
             int leftMenuElementsCountAfter = GetCountOfElementList(_pageObjects.GetLeftListBox(driver));
             int rightMenuElementsCountAfter = GetCountOfElementList(_pageObjects.GetRightListBox(driver));
 
-            driver.Dispose();
+            driver.Quit();
             Assert.True(leftMenuElementsCountAfter == 0);
             Assert.True(rightMenuElementsCountAfter == leftMenuElementsCountBefore + rightMenuElementsCounBefore);
         }
@@ -89,7 +89,7 @@ namespace SeleniumApplication.Tests.ListBox
             int leftMenuElementsCountAfter = GetCountOfElementList(_pageObjects.GetLeftListBox(driver));
             int rightMenuElementsCountAfter = GetCountOfElementList(_pageObjects.GetRightListBox(driver));
 
-            driver.Dispose();
+            driver.Quit();
             Assert.True(rightMenuElementsCountAfter == 0);
             Assert.True(leftMenuElementsCountAfter == leftMenuElementsCountBefore + rightMenuElementsCounBefore);
         }
@@ -104,7 +104,7 @@ namespace SeleniumApplication.Tests.ListBox
 
             int counterOfDisplayedElement = CounterOfDisplayedElement(listOfElements);
 
-            driver.Dispose();
+            driver.Quit();
             Assert.True(counterOfDisplayedElement == 1, $"There is not correct number of displayed elements.\nExpected:1\nCurren:{counterOfDisplayedElement}");
         }
 
@@ -118,7 +118,7 @@ namespace SeleniumApplication.Tests.ListBox
 
             int counterOfDisplayedElement = CounterOfDisplayedElement(listOfElements);
 
-            driver.Dispose();
+            driver.Quit();
             Assert.True(counterOfDisplayedElement == 1, $"There is not correct number of displayed elements.\nExpected:1\nCurren:{counterOfDisplayedElement}");
         }
 
@@ -140,7 +140,7 @@ namespace SeleniumApplication.Tests.ListBox
             ReadOnlyCollection<IWebElement> listOfElements = _pageObjects.GetRightListBox(driver).FindElements(By.CssSelector("li"));
             int counterOfDisplayedElement = CounterOfDisplayedElement(listOfElements);
 
-            driver.Dispose();
+            driver.Quit();
             Assert.True(leftMenuElementsCount == 0, $"Value of left listBox elements is not correct.\nExpected:0\nCurrent:{leftMenuElementsCount}");
             Assert.True(leftMenuElementsCountBefore + leftMenuElementsCountBefore == rightMenuElementsCount, $"Value of right listBox elements is not correct.\nExpected:{sumOfElement}\nCurrent:{rightMenuElementsCount}");
             Assert.True(counterOfDisplayedElement == rightMenuElementsCount, $"Value of displayed elements is not correct. \nExpected:{rightMenuElementsCount}\nCurrent:{counterOfDisplayedElement}");
@@ -164,7 +164,7 @@ namespace SeleniumApplication.Tests.ListBox
             ReadOnlyCollection<IWebElement> listOfElements = _pageObjects.GetLeftListBox(driver).FindElements(By.CssSelector("li"));
             int counterOfDisplayedElement = CounterOfDisplayedElement(listOfElements);
 
-            driver.Dispose();
+            driver.Quit();
             Assert.True(rightMenuElementsCount == 0, $"Value of right listBox elements is not correct.\nExpected:0\nCurrent:{rightMenuElementsCount}");
             Assert.True(leftMenuElementsCountBefore + leftMenuElementsCountBefore == leftMenuElementsCount, $"Value of left listBox elements is not correct.\nExpected:{sumOfElement}\nCurrent:{rightMenuElementsCount}");
             Assert.True(counterOfDisplayedElement == leftMenuElementsCount, $"Value of displayed elements is not correct. \nExpected:{leftMenuElementsCount}\nCurrent:{counterOfDisplayedElement}");
@@ -179,7 +179,7 @@ namespace SeleniumApplication.Tests.ListBox
             int leftMenuElementsCountAfter = GetCountOfElementList(_pageObjects.GetLeftListBox(driver));
             int rightMenuElementsCountAfter = GetCountOfElementList(_pageObjects.GetRightListBox(driver));
 
-            driver.Dispose();
+            driver.Quit();
             Assert.True(leftMenuElementsCountBefore == leftMenuElementsCountAfter, $"Value is not correct.\nExpected:{leftMenuElementsCountBefore}\nCurrent:{leftMenuElementsCountAfter}");
             Assert.True(rightMenuElementsCountBefore == rightMenuElementsCountAfter, $"Value is not correct.\nExpected:{rightMenuElementsCountBefore}\nCurrent:{rightMenuElementsCountAfter}");
         }
