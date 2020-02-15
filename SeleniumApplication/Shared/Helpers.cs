@@ -4,11 +4,12 @@ using System.IO;
 using Newtonsoft.Json.Linq;
 using OpenQA.Selenium;
 using System;
+using System.Threading.Channels;
 using Xunit;
 
 namespace SeleniumApplication.Shared
 {
-    static class Helpers
+    public static class Helpers
     {
         public static ChromeDriver RunPage(string pageUrl)
         {
@@ -63,15 +64,17 @@ namespace SeleniumApplication.Shared
             return dict[key.ToString()];
         }
 
-        public static void AssertTrue(ChromeDriver driver, bool condition, string message)
+        public static void AssertTrue(ChromeDriver driver, bool condition, string message, bool close = true)
         {
+            if (close || !condition)
             driver.Quit();
             Assert.True(condition, message);
         }
 
-        public static void AssertFalse(ChromeDriver driver, bool condition, string message)
+        public static void AssertFalse(ChromeDriver driver, bool condition, string message, bool close = true)
         {
-            driver.Quit();
+            if (close || condition)
+                driver.Quit();
             Assert.False(condition, message);
         }
 
