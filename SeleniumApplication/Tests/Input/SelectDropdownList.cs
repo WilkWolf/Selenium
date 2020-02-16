@@ -18,8 +18,8 @@ namespace SeleniumApplication.Tests.Input
         {
             ChromeDriver driver = Helpers.RunPage(_pageObjects.PageUrl);
             string url = driver.Url;
-             
-            Helpers.AssertTrue(driver,url == "https://www.seleniumeasy.com/test/basic-select-dropdown-demo.html", "Page not exist");
+
+            Helpers.AssertTrue(driver, url == "https://www.seleniumeasy.com/test/basic-select-dropdown-demo.html", "Page not exist");
         }
 
         [Theory]
@@ -38,8 +38,8 @@ namespace SeleniumApplication.Tests.Input
 
             string result = _pageObjects.GetDisplaySelectListValue(driver).Text;
 
-             
-            Helpers.AssertTrue(driver,result == $"Day selected :- {dropdownListValue.ToString()}", $"Exptected value: Day selected: - {dropdownListValue.ToString()}\nCurrent: {result}");
+
+            Helpers.AssertTrue(driver, result == $"Day selected :- {dropdownListValue.ToString()}", $"Exptected value: Day selected: - {dropdownListValue.ToString()}\nCurrent: {result}");
         }
 
         [Theory]
@@ -51,32 +51,37 @@ namespace SeleniumApplication.Tests.Input
             driver.FindElementByXPath(xPathButton).Click();
             string result = _pageObjects.GetDisplayMultiSelectDropdown(driver).Text;
 
-             
-            Helpers.AssertTrue(driver,result == expectedValue, $"Wrong message. \nExpected:{expectedValue}\nCurrent:{result}");
+
+            Helpers.AssertTrue(driver, result == expectedValue, $"Wrong message. \nExpected:{expectedValue}\nCurrent:{result}");
         }
 
         [Fact]
         public void SelectAllValueFromMultiSelectDropdown()
         {
             ChromeDriver driver = Helpers.RunPage(_pageObjects.PageUrl);
-            var listOfMultiSelectValues = _pageObjects.ListOfMultiSelectValue;
             string expectedResult = "Options selected are : California,Florida,New Jersey,New York,Ohio,Texas,Pennsylvania,Washington";
 
-            var multiSelect = _pageObjects.GetSelectMultiListDropdown(driver);
             Actions action = new Actions(driver);
-            action.KeyDown(Keys.LeftControl);
-            for (int i = 0; i < listOfMultiSelectValues.Count(); i++)
-            {
-                multiSelect.SelectByValue(listOfMultiSelectValues.ElementAt(i));
-            }
 
-            action.KeyUp(Keys.LeftControl);
+            action.KeyDown(Keys.Control).DoubleClick(_pageObjects.GetMultiSelectDropdown(driver)).
+                Click(_pageObjects.GetButtonSelect1(driver)).
+                Click(_pageObjects.GetButtonSelect2(driver)).
+                Click(_pageObjects.GetButtonSelect3(driver)).
+                Click(_pageObjects.GetButtonSelect4(driver)).
+                Click(_pageObjects.GetButtonSelect5(driver)).
+                Click(_pageObjects.GetButtonSelect6(driver)).
+                Click(_pageObjects.GetButtonSelect7(driver)).
+                Click(_pageObjects.GetButtonSelect8(driver)).
+                KeyUp(Keys.Control).
+                Build().
+                Perform();
+
             _pageObjects.GetButtonGetAllSelected(driver).Click();
 
             string result = _pageObjects.GetDisplayMultiSelectDropdown(driver).Text;
 
-             
-            Helpers.AssertTrue(driver,result == expectedResult, $"Expected:{expectedResult}\nCurrent:{result}");
+
+            Helpers.AssertTrue(driver, result == expectedResult, $"Expected:{expectedResult}\nCurrent:{result}");
         }
 
 

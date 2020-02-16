@@ -30,11 +30,6 @@ namespace SeleniumApplication.Tests.Table
             Helpers.AssertTrue(driver, numberOfRecords == 5, $"Number of records is not correct\nExpected:5\nCurrent:{numberOfRecords}");
         }
 
-        private IReadOnlyCollection<IWebElement> ListOfElements(IWebElement element)
-        {
-            return element.FindElements(By.TagName("tr"));
-        }
-
         [Fact]
         public void CheckIfAllIsDeselected()
         {
@@ -136,6 +131,11 @@ namespace SeleniumApplication.Tests.Table
 
             Helpers.AssertTrue(driver, countOfElements == 5, $"{countOfElements}Not all elements displayed");
 
+        }
+
+        private IReadOnlyCollection<IWebElement> ListOfElements(IWebElement element)
+        {
+            return element.FindElements(By.TagName("tr"));
         }
 
         private bool CheckIfAllElementsHasSameText(ICollection<IWebElement> displayedList, string expectedText)

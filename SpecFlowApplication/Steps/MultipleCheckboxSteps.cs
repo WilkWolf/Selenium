@@ -14,7 +14,7 @@ namespace SpecFlowApplication.Steps
         [Given(@"I go to basic-first-form-demo\.html page")]
         public void GivenIGoToBasic_First_Form_Demo_HtmlPage()
         {
-            _driver = Helpers.RunPageWithOpenedBrowser(_pageObject.PageUrl);
+            _driver = Helpers.RunPage(_pageObject.PageUrl);
         }
         
         [When(@"I click all checkbox  button in multiple checkbox form")]

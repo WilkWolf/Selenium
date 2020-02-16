@@ -17,7 +17,7 @@ namespace SpecFlowApplication.Steps
             [Given(@"I enter to /test/basic-first-form-demo page")]
             public void GivenIEnterToPage()
             {
-                _driver = Helpers.RunPageWithOpenedBrowser(_pageObject.PageUrl);
+                _driver = Helpers.RunPage(_pageObject.PageUrl);
             }
 
             [Given(@"I have entered ""(.*)"" into the Enter message input")]
