@@ -4,7 +4,7 @@ using SeleniumApplication.Shared;
 
 namespace SeleniumApplication.PageObject.Table
 {
-    class PageObjectDataFilter
+   public class PageObjectDataFilter
     {
         public readonly string PageUrl = Helpers.GetValueFromSettings("..Page.Table.TableFilter");
 
